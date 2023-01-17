@@ -3186,3 +3186,337 @@ curl -X POST "http://localhost:3344/actuator/bus-refresh/config-client:3355
 ![image-20230117114921738](C:\Users\xzf\AppData\Roaming\Typora\typora-user-images\image-20230117114921738.png)
 
 ![image-20230117115015813](C:\Users\xzf\AppData\Roaming\Typora\typora-user-images\image-20230117115015813.png)
+
+
+
+#### springcloud Stream标准流程套路
+
+![image-20230117142728097](C:\Users\xzf\AppData\Roaming\Typora\typora-user-images\image-20230117142728097.png)
+
+![image-20230117142802927](C:\Users\xzf\AppData\Roaming\Typora\typora-user-images\image-20230117142802927.png)
+
+#### 案例说明
+
+![image-20230117142908311](C:\Users\xzf\AppData\Roaming\Typora\typora-user-images\image-20230117142908311.png)
+
+![image-20230117142938369](C:\Users\xzf\AppData\Roaming\Typora\typora-user-images\image-20230117142938369.png)
+
+#### **消息驱动之生产者**
+
+![image-20230117143127457](C:\Users\xzf\AppData\Roaming\Typora\typora-user-images\image-20230117143127457.png)
+
+**pom文件**
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>springCloud01</artifactId>
+        <groupId>com.example</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cloud-stream-rabbitmq-provider8001</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
+        </dependency>
+        <!--基础配置-->
+        
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+</project>
+```
+
+**yml文件**
+
+```
+server:
+  port: 8801
+
+spring:
+  application:
+    name: cloud-stream-provider
+  cloud:
+    stream:
+      binders: # 在此处配置要绑定的rabbitmq的服务信息；
+        defaultRabbit: # 表示定义的名称，用于于binding整合
+          type: rabbit # 消息组件类型
+          environment: # 设置rabbitmq的相关的环境配置
+            spring:
+              rabbitmq:
+                host: localhost
+                port: 5672
+                username: guest
+                password: guest
+      bindings: # 服务的整合处理
+        output: # 这个名字是一个通道的名称
+          destination: studyExchange # 表示要使用的Exchange名称定义
+          content-type: application/json # 设置消息类型，本次为json，文本则设置“text/plain”
+          binder: defaultRabbit # 设置要绑定的消息服务的具体设置
+
+eureka:
+  client: # 客户端进行Eureka注册的配置
+    service-url:
+      defaultZone: http://localhost:7001/eureka, http://eureka7004.com:7004/eureka
+  instance:
+    lease-renewal-interval-in-seconds: 2 # 设置心跳的时间间隔（默认是30秒）
+    lease-expiration-duration-in-seconds: 5 # 如果现在超过了5秒的间隔（默认是90秒）
+    instance-id: send-8801.com  # 在信息列表时显示主机名称
+    prefer-ip-address: true     # 访问的路径变为IP地址
+```
+
+**业务类**
+
+```
+public interface IMessageProvider {
+    public String send();
+}
+```
+
+```
+//定义消息生产者的发送管道
+@EnableBinding(Source.class)
+public class MessageProviderImpl implements IMessageProvider {
+
+    @Resource
+    private MessageChannel output;//消息发送管道
+
+    @Override
+    public String send() {
+        String serial= UUID.randomUUID().toString();
+
+        output.send(MessageBuilder.withPayload(serial).build());
+        System.out.println("*****serial发送成功");
+        return null;
+    }
+}
+```
+
+
+
+```
+@RestController
+public class SendMessageController {
+
+    @Resource
+    private IMessageProvider messageProvider;
+
+    @GetMapping(value = "/sendMessage")
+    public String sendMessage(){
+        return messageProvider.send();
+    }
+}
+```
+
+#### 消息驱动之消费者
+
+![image-20230117152403369](C:\Users\xzf\AppData\Roaming\Typora\typora-user-images\image-20230117152403369.png)
+
+**pom文件**
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>springCloud01</artifactId>
+        <groupId>com.example</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cloud-stream-rabbitmq-consumer8802</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!--基础配置-->
+        
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+</project>
+```
+
+**yml文件**（会有爆红，暂时不影响）
+
+```
+server:
+  port: 8802
+
+spring:
+  application:
+    name: cloud-stream-consumer
+  cloud:
+    stream:
+      binders: # 在此处配置要绑定的rabbitmq的服务信息；
+        defaultRabbit: # 表示定义的名称，用于于binding整合
+          type: rabbit # 消息组件类型
+          environment: # 设置rabbitmq的相关的环境配置
+            spring:
+              rabbitmq:
+                host: localhost
+                port: 5672
+                username: guest
+                password: guest
+      bindings: # 服务的整合处理
+        input: # 这个名字是一个通道的名称
+          destination: studyExchange # 表示要使用的Exchange名称定义
+          content-type: application/json # 设置消息类型，本次为对象json，如果是文本则设置“text/plain”
+          binder: defaultRabbit # 设置要绑定的消息服务的具体设置
+
+eureka:
+  client: # 客户端进行Eureka注册的配置
+    service-url:
+      defaultZone: http://localhost:7001/eureka
+  instance:
+    lease-renewal-interval-in-seconds: 2 # 设置心跳的时间间隔（默认是30秒）
+    lease-expiration-duration-in-seconds: 5 # 如果现在超过了5秒的间隔（默认是90秒）
+    instance-id: receive-8802.com  # 在信息列表时显示主机名称
+    prefer-ip-address: true     # 访问的路径变为IP地址
+```
+
+**业务类：**
+
+```
+@RestController
+@EnableBinding(Sink.class)
+public class ReceiveMessageController {
+
+    @Value("${server.port}")
+    private String serverPort;
+
+    @StreamListener(Sink.INPUT)
+    public void input(Message<String> message){
+        System.out.println("消费者一号，----->接收到的消息： "+message.getPayload()+"\t port: "+serverPort);
+    }
+
+}
+```
+
+**测试**
+
+http://localhost:8801/sendMessage
+
+![image-20230117160315479](C:\Users\xzf\AppData\Roaming\Typora\typora-user-images\image-20230117160315479.png)
+
+![image-20230117160337368](C:\Users\xzf\AppData\Roaming\Typora\typora-user-images\image-20230117160337368.png)
+
+
+
+#### 分组消费与持久化
+
+![image-20230117160446937](C:\Users\xzf\AppData\Roaming\Typora\typora-user-images\image-20230117160446937.png)
+
+在建8003时，记得yml是有改变的，端口号改8003，还有![image-20230117162418157](C:\Users\xzf\AppData\Roaming\Typora\typora-user-images\image-20230117162418157.png)
+
+这边也要改，最后在Eureka注册中心是这样子的才对
+
+![image-20230117162249631](C:\Users\xzf\AppData\Roaming\Typora\typora-user-images\image-20230117162249631.png)
+
+
+
+##### 运行后有两个问题
+
+![image-20230117162640728](C:\Users\xzf\AppData\Roaming\Typora\typora-user-images\image-20230117162640728.png)
+
+**消费**
+
+![image-20230117162721377](C:\Users\xzf\AppData\Roaming\Typora\typora-user-images\image-20230117162721377.png)
+
+![image-20230117163249300](C:\Users\xzf\AppData\Roaming\Typora\typora-user-images\image-20230117163249300.png)
+
+**查看分组**
+
+![image-20230117163528559](C:\Users\xzf\AppData\Roaming\Typora\typora-user-images\image-20230117163528559.png)
+
+![image-20230117163556917](C:\Users\xzf\AppData\Roaming\Typora\typora-user-images\image-20230117163556917.png
+
+![image-20230117163709790](C:\Users\xzf\AppData\Roaming\Typora\typora-user-images\image-20230117163709790.png)
+
+**由此可见此时是两个分组，所以重复消费**
+
+![image-20230117163955338](C:\Users\xzf\AppData\Roaming\Typora\typora-user-images\image-20230117163955338.png)
+
+**解决：**
+
+![image-20230117164041640](C:\Users\xzf\AppData\Roaming\Typora\typora-user-images\image-20230117164041640.png)
+
+#### 分组
+
+![image-20230117164129416](C:\Users\xzf\AppData\Roaming\Typora\typora-user-images\image-20230117164129416.png)
+
+![image-20230117164235268](C:\Users\xzf\AppData\Roaming\Typora\typora-user-images\image-20230117164235268.png)
+
+**两个yml修改**（先修改成不同的，在修改成一样的）
+
+![image-20230117164402424](C:\Users\xzf\AppData\Roaming\Typora\typora-user-images\image-20230117164402424.png)
+
+![image-20230117164704216](C:\Users\xzf\AppData\Roaming\Typora\typora-user-images\image-20230117164704216.png)
+
+改变成功
+
+接下来相同组
+
+#### 持久化
+
+![image-20230117165348814](C:\Users\xzf\AppData\Roaming\Typora\typora-user-images\image-20230117165348814.png)
+
+
+
+
+
+## 六. SpringCloud Sleuth分布式请求链路跟踪
+
