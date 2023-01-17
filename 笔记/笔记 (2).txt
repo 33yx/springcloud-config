@@ -1,0 +1,80 @@
+1.1如何获得Mybatis
+  *.maven 仓库：
+    <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
+    <dependency>
+    <groupId>org.mybatis</groupId>
+    <artifactId>mybatis</artifactId>
+    <version>3.5.2</version>
+    </dependency>
+  *Github： https://github.com/mybatis/mybatis-3/releases
+  *中文文档 https://mybatis.org/mybatis-3/zh/getting-started.html
+
+
+1.2、持久层
+数据持久化
+* 持久化就是将程序的数据在持久状态和瞬时状态转化过程
+* 内存：断电即失
+*数据库（jdbc）,io文件持久化
+*生活：冷藏
+
+1.4为什么要Mybatis？
+ *帮助程序员将数据存入数据库
+ *方便
+ *传统的JDBC太复杂。简化，框架，自动化。
+ *不用MYbatis也可以。更容易上手，技术没有高低之分
+
+                                   2.第一个Mybatis程序
+
+思路：搭建环境--》导入Mybatis--》编写代码--》测试
+
+2.1、搭建环境
+
+create view VSC(Sno,Sname,Cno,Cname,Grade)
+as
+select bookrentalmanagementsystem.s.Sno,bookrentalmanagementsystem.s.Sname,bookrentalmanagementsystem.c.Cno,bookrentalmanagementsystem.c.Cname,bookrentalmanagementsystem.sc.Grade
+from bookrentalmanagementsystem.c,bookrentalmanagementsystem.s,bookrentalmanagementsystem.sc
+where bookrentalmanagementsystem.sc.Cno=bookrentalmanagementsystem.c.Cno and bookrentalmanagementsystem.sc.Sno=bookrentalmanagementsystem.s.Sno;
+
+3.1 banner：https://www.bootschool.net/ascii-art/
+
+3.2 修改端口号： 在 application.properties里修改
+ server.port=8081
+3.3 pom.xml
+   (1).spring-boot-dependencies:核心依赖在父工程中！
+    （2）我们在写入或者引入一些springboot依赖的时候，不需要指定版本，就因为有这些版本仓库
+
+4.1 启动器
+     <parent>
+		<!--启动器-->
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.5.2</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>    
+      （1）启动器：就是springboot的启动场景
+       （2）比如spring-boot-starter-web，他都会帮我们自动导入web环境的所有依赖！
+        （3）springboot会见所有的功能场景，都变成一个个的启动器
+      （4） 我们要使用什么功能，就只需要找到对应的启动器就可以  
+
+4.5 主程序
+  （1）@SpringBootApplication:标注这个类是一个SpringBoot的应用
+    （2）将springboot应用启动
+   public static void main(String[] args) {
+		SpringApplication.run(Springboot01Application.class, args);
+	}
+      （3）@SpringBootConfiguration
+             @Configuration:  spring 配置类
+               @Component:说明这也是一个spring的组件
+       (4)EnableAutoConfiguration  ：自动配置
+         @AutoConfigurationPackage: 自动配置包
+             @import（AutoConfigurationPackages.Registar.class）:导入选择器
+
+
+
+
+
+
+
+
+
+
