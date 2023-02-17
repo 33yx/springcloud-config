@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.xzf.springboot.dao.ManagerDao">
+
+    <select id="queryManagerToLogin" resultType="Manager">
+        select * from managertable where mphone=#{mphone} and mpassword=#{mpassword}
+    </select>
+
+    <select id="queryManagerList" resultType="Manager">
+        select * from managertable
+    </select>
+
+    <select id="queryManagerListById" resultType="Manager">
+        select * from managertable where managerid=#{id}
+    </select>
+
+    <insert id="addManager" parameterType="Manager">
+        insert into managertable (managerid,mphone,mpassword,musername,power,mrole) values(#{id},#{mphone},#{mpassword},)
+    </insert>
+    <update id="updateManager" parameterType="Manager">
+        update managertable set mphone=#{mphone},useage=#{mpassword},musername=#{musername},power=#{power},mrole=#{mrole} where managerid=#{id}
+    </update>
+
+    <delete id="deleteManager" parameterType="int" >
+        delete from managertable where managerid=#{id}
+    </delete>
+
+</mapper>
