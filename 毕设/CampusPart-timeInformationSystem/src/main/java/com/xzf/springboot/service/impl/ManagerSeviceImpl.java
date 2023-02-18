@@ -31,6 +31,14 @@ public class ManagerSeviceImpl implements ManagerService {
         return manager;
     }
 
+    //验证是否重复账号
+    @Override
+    public Integer queryManagerListByMphone(String mphone) {
+
+        Integer managerid=managerDao.queryManagerListByMphone(mphone);
+        return managerid;
+    }
+
     @Override
     public int addManager(Manager manager) {
         int a=managerDao.addManager(manager);

@@ -15,11 +15,15 @@
         select * from managertable where managerid=#{id}
     </select>
 
+    <select id="queryManagerListByMphone" resultType="Integer">
+        select managerid from managertable where mphone=#{mphone}
+    </select>
+
     <insert id="addManager" parameterType="Manager">
-        insert into managertable (managerid,mphone,mpassword,musername,power,mrole) values(#{id},#{mphone},#{mpassword},)
+        insert into managertable (managerid,mphone,mpassword,musername,power,mrole,datetime) values(#{managerid},#{mphone},#{mpassword},#{musername},#{power},#{mrole},#{datetime})
     </insert>
     <update id="updateManager" parameterType="Manager">
-        update managertable set mphone=#{mphone},useage=#{mpassword},musername=#{musername},power=#{power},mrole=#{mrole} where managerid=#{id}
+        update managertable set mphone=#{mphone},useage=#{mpassword},musername=#{musername},power=#{power},mrole=#{mrole},datetime=#{datetime} where managerid=#{id}
     </update>
 
     <delete id="deleteManager" parameterType="int" >

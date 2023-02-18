@@ -19,6 +19,9 @@ public interface ManagerDao {
     //查询所有
     List<Manager> queryManagerList();
 
+    //验证手机号或者登陆名唯一
+    Integer queryManagerListByMphone(String mphone);
+
     //根据id查询
     Manager queryManagerListById(int id);
 
