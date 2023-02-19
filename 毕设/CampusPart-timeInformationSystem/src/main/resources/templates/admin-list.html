@@ -55,7 +55,7 @@
                               <thead>
                                 <tr>
                                   <th>
-                                    <input type="checkbox" name=""  lay-skin="primary">
+                                    <input class="layui-unselect header layui-form-checkbox" type="checkbox"  name=""  lay-skin="primary">
                                   </th>
                                   <th>ID</th>
                                   <th>登录名</th>
@@ -69,7 +69,7 @@
                               <tbody>
                                 <tr th:each="manager:${managers}">
                                   <td>
-                                    <input type="checkbox" name=""  lay-skin="primary">
+                                    <input type="checkbox" name="mids"  lay-skin="primary" th:value="${manager.getManagerid()}">
                                   </td>
                                   <td name="nomid" th:text="${manager.getManagerid()}"></td>
                                   <td th:text="${manager.getMusername()}"></td>
@@ -165,8 +165,7 @@
                   url: '/sys/delete',
                   type: 'GET',
                   data:{'mid':id}
-              })
-                  .done(function(dat) {
+              }).done(function(dat) {
                       console.log(dat)
 
                       if (dat.rid==1){
@@ -182,15 +181,46 @@
 
 
 
-      function delAll (argument) {
+      // /sys/delall
+      function delAll () {
 
-        var data = tableCheck.getData();
+          var mids="";
+          $("[name='mids']:checked").each(function(){
+              mids+=$(this).val()+",";
+          })
+          mids = mids.substring(0, mids.length - 1);
+          console.log(mids)
+
+          layer.confirm('确认要删除吗？',function(index){
+              //捉到所有被选中的，发异步进行删除
+              $.ajax({
+                  url: "/sys/delall", //后端地址
+                  type: "GET",       //提交方式
+                  data: {"mids": mids}
+              }).done(function(dat) {
+                  console.log(dat)
+
+                  if (dat.rid==1){
+                      layer.msg(dat.msg, {icon: 1});
+                      $(".layui-form-checked").not('.header').parents('tr').remove();
+                  }else {
+                      layer.msg(dat.msg,{icon:1,time:1000});
+                  }
+
+              })
+          });
+
+          // $.ajax({
+          //     url: '/sys/delall',
+          //     type: 'post',
+          //     data:{'mids':mids}
+          // })
+
+
+
+        // var data = dataCheck.getData();
   
-        layer.confirm('确认要删除吗？'+data,function(index){
-            //捉到所有被选中的，发异步进行删除
-            layer.msg('删除成功', {icon: 1});
-            $(".layui-form-checked").not('.header').parents('tr').remove();
-        });
+
       }
     </script>
     <script>var _hmt = _hmt || []; (function() {

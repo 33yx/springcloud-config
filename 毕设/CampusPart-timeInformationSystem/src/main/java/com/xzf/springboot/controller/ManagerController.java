@@ -9,7 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ManagerController {
@@ -140,4 +142,43 @@ public class ManagerController {
 
         return result;
     }
+
+
+    @GetMapping("/sys/delall")
+    @ResponseBody
+    public Result vdelBatch(String mids) {
+        Result result=null;
+        int d=0;
+        String [] midlist=mids.split(",");
+        try {
+            for (int i=0;i<midlist.length;i++){
+                if (midlist[i].equals("1")){
+                    System.out.println("错误");
+                    d=1314520;
+                    break;
+
+                }else {
+                    d=managerService.deleteManager(Integer.parseInt(midlist[i]));
+                    d+=1;
+                }
+            }
+            if (d==1314520){
+                result=new Result(0004,"包含特殊超级管理员，不能删除,请重选选择");
+            }else if (d!=0){
+                result=new Result(0001,"删除成功");
+            }else{
+                result=new Result(0002,"删除失败");
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
+
+
+        return result;
+
+    }
+
+//    //批量删除
+
 }
