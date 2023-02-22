@@ -1,5 +1,7 @@
 package com.xzf.springboot.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xzf.springboot.pojo.Manager;
 import com.xzf.springboot.pojo.Result;
 import com.xzf.springboot.service.ManagerService;
@@ -15,20 +17,23 @@ import java.util.Map;
 
 @Controller
 public class ManagerController {
-
     @Autowired
     private ManagerService managerService;
 
-
-
-
-
     @GetMapping("/sys/admin-list")
-    public String queryManagerList(Model model){
+//    @RequestMapping("/sys/admin-list")
+    public String queryManagerList(Model model,@RequestParam(defaultValue = "1",value = "pageNum")int pageNum){
         String string="";
+        List<Manager> managers=null;
+        PageHelper.startPage(pageNum,5);
+//        System.out.println(starttime+endtiem+username);
         try {
-            List<Manager> managers=managerService.queryManagerList();
-            model.addAttribute("managers",managers);
+            managers=managerService.queryManagerList();
+//            System.out.println("xzf查全部"+managers);
+            PageInfo<Manager> page=new PageInfo<>(managers);
+//            System.out.println("xzf查部分"+page);
+            model.addAttribute("managers",page);
+
             string="admin-list";
         }catch (Exception e){
             model.addAttribute("erro","载入错误");
@@ -104,17 +109,41 @@ public class ManagerController {
         return result;
     }
 
+    @GetMapping("/sys/admin-edit/{mid}")
+    public String toEdit( @PathVariable("mid") Integer mid,Model model){
+        Manager manager = managerService.queryManagerListById(mid);
+
+        model.addAttribute("manager",manager);
+        return "admin-edit";
+    }
 
 
-    public int updateManager(Manager manager) {
-        int u=0;
-        try {
-            u=managerService.updateManager(manager);
-        }catch (Exception e){
-            System.out.println(e);
+    @RequestMapping(value = "/sys/update",produces = "application/json;charset=utf-8",method = RequestMethod.POST)
+    @ResponseBody
+    public Result updateManager(@RequestBody Manager manager) {
+        Integer u=null;
+        Result result=null;
+
+        switch (manager.getPower()){
+            case 1: manager.setMrole("超级管理员");
+                break;
+            case 2: manager.setMrole("商家管理员");
+                break;
+            case 3: manager.setMrole("学生管理员");
+                break;
+            case 4: manager.setMrole("兼职管理员");
+                break;
+        }
+        u=managerService.updateManager(manager);
+
+
+        if (u==1){
+            result=new Result(0001,"修改成功");
+        }else {
+            result=new Result(0003,"修改失败");
         }
 
-        return u;
+        return result;
     }
 
 
@@ -143,7 +172,7 @@ public class ManagerController {
         return result;
     }
 
-
+    //    //批量删除
     @GetMapping("/sys/delall")
     @ResponseBody
     public Result vdelBatch(String mids) {
@@ -179,6 +208,29 @@ public class ManagerController {
 
     }
 
-//    //批量删除
+    //修改，赋予转态
+    @PostMapping("/sys/changeState")
+    public String changeState(Integer state,int mid){
+        Result result = null;
+        String string=null;
+        System.out.println(state);
+        Integer i = managerService.changeState(state, mid);
+        if (i==1){
+//            result=new Result(0001,"成功");
+            string="redirect:/sys/admin-list";
+        }else {
+//            result=new Result(0002,"失败");
+            string="/sys/error";
+        }
+
+
+        return string;
+
+    }
+
+
+
+
+
 
 }

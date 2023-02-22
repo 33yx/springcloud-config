@@ -7,11 +7,11 @@
         select * from managertable where mphone=#{mphone} and mpassword=#{mpassword}
     </select>
 
-    <select id="queryManagerList" resultType="Manager">
+    <select id="queryManagerList" resultType="com.xzf.springboot.pojo.Manager">
         select * from managertable
     </select>
 
-    <select id="queryManagerListById" resultType="Manager">
+    <select id="queryManagerListById" resultType="com.xzf.springboot.pojo.Manager">
         select * from managertable where managerid=#{id}
     </select>
 
@@ -19,12 +19,34 @@
         select managerid from managertable where mphone=#{mphone}
     </select>
 
+<!--    时间搜索-->
+    <select id="search" resultType="com.xzf.springboot.pojo.Manager">
+        select * from managertable
+        <where>
+            <if test="startTime != null and startTime != ''">
+                AND datetime <![CDATA[ >= ]]> #{startTime}
+            </if>
+<!--            <if test="endTime != null and endTime != ''">-->
+<!--                AND datetime <![CDATA[ <= ]]> #{endTime}-->
+<!--            </if>-->
+            <if test="userName != null and userName != ''">
+                AND musername like '%${userName}%'
+            </if>
+        </where>
+    </select>
+
     <insert id="addManager" parameterType="Manager">
         insert into managertable (managerid,mphone,mpassword,musername,power,mrole,datetime) values(#{managerid},#{mphone},#{mpassword},#{musername},#{power},#{mrole},#{datetime})
     </insert>
     <update id="updateManager" parameterType="Manager">
-        update managertable set mphone=#{mphone},useage=#{mpassword},musername=#{musername},power=#{power},mrole=#{mrole},datetime=#{datetime} where managerid=#{id}
+        update managertable set musername=#{musername},mphone=#{mphone},mpassword=#{mpassword},power=#{power},mrole=#{mrole} where managerid=#{managerid}
     </update>
+
+    <update id="changeState" parameterType="Integer">
+        update managertable set state=#{state} where managerid=#{id}
+    </update>
+
+
 
     <delete id="deleteManager" parameterType="int" >
         delete from managertable where managerid=#{id}

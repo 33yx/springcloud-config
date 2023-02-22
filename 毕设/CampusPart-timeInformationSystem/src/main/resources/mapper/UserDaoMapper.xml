@@ -13,10 +13,10 @@
     </select>
 
     <insert id="addUser" parameterType="User">
-        insert into usertable (id,usename,useage,schoollname,studentid,cardid,phone,password,status) values(#{id},#{usename},#{useage},#{schoollname},#{studentid},#{cardid},#{phone},#{password},#{status})
+        insert into usertable (id,usename,useage,schoollname,studentid,cardid,phone,password,status,usex,address,uemail) values(#{id},#{usename},#{useage},#{schoollname},#{studentid},#{cardid},#{phone},#{password},#{status},#{usex},#{address},#{uemail})
     </insert>
     <update id="updateUser" parameterType="User">
-        update usertable set usename=#{usename},useage=#{useage},schoollname=#{schoollname},studentid=#{studentid},cardid=#{cardid},phone=#{phone},password=#{password},status=#{status} where id=#{id}
+        update usertable set usename=#{usename},useage=#{useage},schoollname=#{schoollname},studentid=#{studentid},cardid=#{cardid},phone=#{phone},password=#{password},status=#{status},usex=#{usex},address=#{address},uemail=#{uemail} where id=#{id}
     </update>
 
     <delete id="deleteUser" parameterType="int" >

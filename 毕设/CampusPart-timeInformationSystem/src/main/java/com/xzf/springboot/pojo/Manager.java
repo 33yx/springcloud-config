@@ -31,4 +31,6 @@ public class Manager implements Serializable {
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
     private Timestamp datetime;
+
+    private Integer state;
 }

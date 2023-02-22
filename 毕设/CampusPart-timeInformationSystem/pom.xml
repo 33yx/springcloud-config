@@ -63,7 +63,13 @@
 			<artifactId>springboot</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-	</dependencies>
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper-spring-boot-starter</artifactId>
+			<version>1.4.3</version>
+		</dependency>
+
+    </dependencies>
 
 	<build>
 		<plugins>

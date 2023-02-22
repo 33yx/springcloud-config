@@ -1,9 +1,12 @@
 package com.xzf.springboot.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xzf.springboot.dao.ManagerDao;
 import com.xzf.springboot.pojo.Manager;
 import com.xzf.springboot.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +29,19 @@ public class ManagerSeviceImpl implements ManagerService {
     }
 
     @Override
+    public PageInfo splitPage() {
+        PageHelper.startPage(1,5);
+        List<Manager> list=null;
+        try{
+           list = managerDao.queryManagerList();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
+        return new PageInfo<>(list);
+    }
+
+    @Override
     public Manager queryManagerListById(int id) {
         Manager manager=managerDao.queryManagerListById(id);
         return manager;
@@ -40,14 +56,33 @@ public class ManagerSeviceImpl implements ManagerService {
     }
 
     @Override
+    public List<Manager> search(String startTime, String endTime,String userName) {
+        List<Manager> search=null;
+        try{
+            System.out.println("开始进入搜索");
+            search = managerDao.search(startTime, startTime,userName);
+            System.out.println("搜索结果为："+search);
+        }catch (Exception e){
+            System.out.println("查询报错为："+e);
+        }
+        return search;
+    }
+
+    @Override
     public int addManager(Manager manager) {
         int a=managerDao.addManager(manager);
         return a;
     }
 
     @Override
-    public int updateManager(Manager manager) {
-        int u=managerDao.updateManager(manager);
+    public Integer updateManager(Manager manager) {
+        Integer u=null;
+        try{
+            u=managerDao.updateManager(manager);
+
+        }catch (Exception e){
+            System.out.println(e);
+        }
         return u;
     }
 
@@ -55,5 +90,16 @@ public class ManagerSeviceImpl implements ManagerService {
     public int deleteManager(int id) {
         int d=managerDao.deleteManager(id);
         return d;
+    }
+
+    @Override
+    public Integer changeState(Integer state,int id) {
+        Integer s=null;
+        try {
+            s=managerDao.changeState(state,id);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return s;
     }
 }

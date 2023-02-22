@@ -13,6 +13,8 @@ public class MyMvcConfig implements WebMvcConfigurer {
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/index.html").setViewName("index");
         registry.addViewController("/sys/admin-add.html").setViewName("admin-add");
+        registry.addViewController("/sys/welcome.html").setViewName("welcome");
+
 
     }
 

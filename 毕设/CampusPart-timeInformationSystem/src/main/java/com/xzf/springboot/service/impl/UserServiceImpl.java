@@ -15,32 +15,65 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> queryUserList() {
-        List<User> userList=userDao.queryUserList();
+        List<User> userList=null;
+
+        try{
+            userList=userDao.queryUserList();
+
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
 
         return userList;
     }
 
     @Override
     public User queryUserListById(int id) {
-        User user=userDao.queryUserListById(id);
+        User user=new User();
+        try {
+            user =userDao.queryUserListById(id);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
         return user;
     }
 
     @Override
     public int addUser(User user) {
-        int a=userDao.addUser(user);
+
+        Integer a=null;
+        try {
+            a=userDao.addUser(user);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
         return a;
     }
 
     @Override
     public int updateUser(User user) {
-        int u=userDao.updateUser(user);
+        Integer u=null;
+        try{
+            u=userDao.updateUser(user);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
         return u;
     }
 
     @Override
     public int deleteUser(int id) {
-        int d=userDao.deleteUser(id);
+        Integer d=null;
+        try {
+            d =userDao.deleteUser(id);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
         return d;
     }
 }

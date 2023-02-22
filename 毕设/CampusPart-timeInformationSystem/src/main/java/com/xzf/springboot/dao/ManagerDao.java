@@ -19,6 +19,9 @@ public interface ManagerDao {
     //查询所有
     List<Manager> queryManagerList();
 
+
+    List<Manager> search(String startTime,String endTime,String userName);
+
     //验证手机号或者登陆名唯一
     Integer queryManagerListByMphone(String mphone);
 
@@ -29,9 +32,14 @@ public interface ManagerDao {
     int addManager(Manager manager);
 
     //更新
-    int updateManager(Manager manager);
+    Integer updateManager(Manager manager);
 
     //删除
     int deleteManager(int id);
+
+    //修改状态
+    Integer changeState(Integer state,int id);
+
+
 
 }
