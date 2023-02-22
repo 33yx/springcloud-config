@@ -24,6 +24,7 @@ public interface ManagerService {
     //查询
     List<Manager> search(String startTime,String endTime,String userName);
 
+
     //增加
     int addManager(Manager manager);
 

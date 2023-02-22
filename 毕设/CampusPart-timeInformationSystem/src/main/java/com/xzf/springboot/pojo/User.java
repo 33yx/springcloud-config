@@ -22,4 +22,5 @@ public class User implements Serializable {
     private String usex;
     private String address;
     private String uemail;
+    private String uname;
 }

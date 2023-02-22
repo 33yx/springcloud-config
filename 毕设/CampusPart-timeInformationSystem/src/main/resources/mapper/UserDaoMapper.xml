@@ -12,16 +12,30 @@
         select * from usertable where id=#{id}
     </select>
 
+    <select id="queryUserListByphone" resultType="User">
+        select id from usertable where phone=#{phone}
+    </select>
+
+
+
     <insert id="addUser" parameterType="User">
-        insert into usertable (id,usename,useage,schoollname,studentid,cardid,phone,password,status,usex,address,uemail) values(#{id},#{usename},#{useage},#{schoollname},#{studentid},#{cardid},#{phone},#{password},#{status},#{usex},#{address},#{uemail})
+        insert into usertable (id,usename,useage,schoollname,studentid,cardid,phone,password,status,usex,address,uemail,uname) values(#{id},#{usename},#{useage},#{schoollname},#{studentid},#{cardid},#{phone},#{password},#{status},#{usex},#{address},#{uemail},#{uname})
     </insert>
+<!--    <update id="updateUser" parameterType="User">-->
+<!--        update usertable set usename=#{usename},useage=#{useage},schoollname=#{schoollname},studentid=#{studentid},cardid=#{cardid},phone=#{phone},password=#{password},usex=#{usex},address=#{address},uemail=#{uemail},uname=#{uname} where id=#{id}-->
+<!--    </update>-->
+
     <update id="updateUser" parameterType="User">
-        update usertable set usename=#{usename},useage=#{useage},schoollname=#{schoollname},studentid=#{studentid},cardid=#{cardid},phone=#{phone},password=#{password},status=#{status},usex=#{usex},address=#{address},uemail=#{uemail} where id=#{id}
+        update usertable set usename=#{usename},useage=#{useage},schoollname=#{schoollname},studentid=#{studentid},cardid=#{cardid},phone=#{phone},password=#{password},usex=#{usex},address=#{address},uemail=#{uemail},uname=#{uname} where id=#{id}
     </update>
 
     <delete id="deleteUser" parameterType="int" >
         delete from usertable where id=#{id}
     </delete>
+
+    <update id="changeUserStates" parameterType="Integer">
+        update usertable set status=#{state} where id=#{id}
+    </update>
 
 
 

@@ -16,6 +16,9 @@ public interface UserDao {
     //根据id查询
     User queryUserListById(int id);
 
+    //根据phone查询
+    Integer queryUserListByphone(String phone);
+
     //增加用户
     int addUser(User user);
 
@@ -24,6 +27,9 @@ public interface UserDao {
 
     //删除用户
     int deleteUser(int id);
+
+    //改变转态
+    Integer changeUserStates(Integer state,int id);
 
 
 

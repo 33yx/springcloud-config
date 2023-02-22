@@ -11,6 +11,9 @@ public interface UserService {
 
     User queryUserListById(int id);
 
+    //根据phone查询
+    Integer queryUserListByphone(String phone);
+
     int addUser(User user);
 
     //更新用户
@@ -18,6 +21,9 @@ public interface UserService {
 
     //删除用户
     int deleteUser(int id);
+
+    //改变转态
+    Integer changeUserStates(Integer state,int id);
 
 
 

@@ -41,6 +41,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Integer queryUserListByphone(String phone) {
+        Integer p=-66;
+        try{
+        p= userDao.queryUserListByphone(phone);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    @Override
     public int addUser(User user) {
 
         Integer a=null;
@@ -57,7 +68,9 @@ public class UserServiceImpl implements UserService {
     public int updateUser(User user) {
         Integer u=null;
         try{
+            System.out.println("进入修改");
             u=userDao.updateUser(user);
+            System.out.println("ser层修改后"+u);
         }catch (Exception e){
             System.out.println(e);
         }
@@ -75,5 +88,16 @@ public class UserServiceImpl implements UserService {
         }
 
         return d;
+    }
+
+    @Override
+    public Integer changeUserStates(Integer state, int id) {
+        Integer s=null;
+        try {
+            s=userDao.changeUserStates(state,id);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return s;
     }
 }

@@ -64,7 +64,7 @@ public class ManagerController {
     @ResponseBody
     public Result addManager(int mid,String musername, String phone, int power, String password) {//@RequestBody Manager manager
         Result result=null;
-        Integer i = 110;
+        Integer i = -66;
         Manager manager=new Manager();
         System.out.println("hhhah"+musername+","+phone+","+power+","+password);
 
@@ -76,7 +76,7 @@ public class ManagerController {
 
 
         if (i==null){
-            System.out.println("账好不存在");
+            System.out.println("账号不存在");
             //创建账号
             manager.setManagerid(mid);
             manager.setMusername(musername);
@@ -118,6 +118,7 @@ public class ManagerController {
     }
 
 
+    //修改
     @RequestMapping(value = "/sys/update",produces = "application/json;charset=utf-8",method = RequestMethod.POST)
     @ResponseBody
     public Result updateManager(@RequestBody Manager manager) {
@@ -146,11 +147,11 @@ public class ManagerController {
         return result;
     }
 
-
+    //删除
     @GetMapping("/sys/delete")
     @ResponseBody
     public Result deleteManager(int mid) {
-        System.out.println("到达目的地");
+        System.out.println("开始删除");
         int d=0;
         Result result=null;
         if (mid==1){
