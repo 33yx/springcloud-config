@@ -18,6 +18,7 @@
 
 
 
+
     <insert id="addUser" parameterType="User">
         insert into usertable (id,usename,useage,schoollname,studentid,cardid,phone,password,status,usex,address,uemail,uname) values(#{id},#{usename},#{useage},#{schoollname},#{studentid},#{cardid},#{phone},#{password},#{status},#{usex},#{address},#{uemail},#{uname})
     </insert>
@@ -36,6 +37,8 @@
     <update id="changeUserStates" parameterType="Integer">
         update usertable set status=#{state} where id=#{id}
     </update>
+
+
 
 
 

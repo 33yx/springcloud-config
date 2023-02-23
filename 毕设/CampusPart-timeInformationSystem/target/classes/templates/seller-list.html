@@ -48,7 +48,7 @@
                         </div>
                         <div class="layui-card-header">
                             <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-                            <button class="layui-btn" onclick="xadmin.open('添加用户','./member-add.html',600,400)"><i class="layui-icon"></i>添加</button>
+                            <button class="layui-btn" onclick="xadmin.open('添加用户','./seller-add.html',600,400)"><i class="layui-icon"></i>添加</button>
                         </div>
                         <div class="layui-card-body layui-table-body layui-table-main">
                             <table class="layui-table layui-form">
@@ -57,53 +57,51 @@
                                     <th>
                                       <input type="checkbox" lay-filter="checkall" name="" lay-skin="primary">
                                     </th>
-                                    <th>ID</th>
+                                    <th>商家ID</th>
                                     <th>用户名</th>
-                                    <th>性别</th>
-                                    <th>性名</th>
+                                    <th>身份证号</th>
+                                    <th>姓名</th>
                                     <th>年龄</th>
+                                    <th>性别</th>
                                     <th>手机</th>
                                     <th>密码</th>
+                                    <th>营业执照</th>
+                                    <th>地址</th>
                                     <th>邮箱</th>
-                                    <th>身份证</th>
-                                    <th>学生证</th>
-                                    <th>学校名称</th>
-                                    <th>地址（市县/区）</th>
                                     <th>状态</th>
                                     <th>操作</th></tr>
                                 </thead>
                                 <tbody>
-                                  <tr th:each="user:${users.getList()}">
+                                  <tr th:each="seller:${sellers.getList()}">
                                     <td>
-                                      <input type="checkbox" name="id" th:value="${user.getId()}"   lay-skin="primary">
+                                      <input type="checkbox" name="sid" th:value="${seller.getSellerid()}"   lay-skin="primary">
                                     </td>
-                                    <td th:text="${user.getId()}"></td>
-                                    <td th:text="${user.getUsename()}"></td>
-                                    <td th:text="${user.getUsex()}"></td>
-                                    <td th:text="${user.getUname()}"></td>
-                                    <td th:text="${user.getUseage()}"></td>
-                                    <td th:text="${user.getPhone()}"></td>
-                                    <td th:text="${user.getPassword()}"></td>
-                                    <td th:text="${user.getUemail()}"></td>
-                                    <td th:text="${user.getCardid()}"></td>
-                                    <td th:text="${user.getStudentid()}"></td>
-                                    <td th:text="${user.getSchoollname()}"></td>
-                                    <td th:text="${user.getAddress()}"></td>
-                                    <td class="td-status">
-                                      <span th:class="${user.getStatus()}==1 ? 'layui-btn layui-btn-normal layui-btn-mini' : 'layui-btn layui-btn-normal layui-btn-mini layui-btn-disabled'">已启用</span></td>
-                                    <td class="td-manage">
-                                      <a th:onclick = "|javascript : member_stop(this,'${ user.getId }' )|" href="javascript:;"  th:title="${user.getStatus()}">
-                                          <i class="layui-icon" th:if="${user.getStatus()}==1">&#xe601;</i>
-                                          <i class="layui-icon" th:if="${user.getStatus()}==0 or ${user.getStatus()}==null">&#xe62f;</i>
+                                    <td th:text="${seller.getSellerid()}"></td>
+                                    <td th:text="${seller.getSname()}"></td>
+                                    <td th:text="${seller.getCarid()}"></td>
+                                    <td th:text="${seller.getCname()}"></td>
+                                    <td th:text="${seller.getCage()}"></td>
+                                    <td th:text="${seller.getSsex()}"></td>
+                                    <td th:text="${seller.getSphone()}"></td>
+                                    <td th:text="${seller.getSpasswoed()}"></td>
+                                    <td th:text="${seller.getBusinesslicense()}"></td>
+                                    <td th:text="${seller.getSaddress()}"></td>
+                                    <td th:text="${seller.getSemail()}"></td>
 
+                                    <td class="td-status">
+                                        <span th:class="${seller.getSstatus()}==1 ? 'layui-btn layui-btn-normal layui-btn-mini' : 'layui-btn layui-btn-normal layui-btn-mini layui-btn-disabled'">已启用</span></td>
+                                    <td class="td-manage">
+                                      <a th:onclick = "|javascript : member_stop(this,'${ seller.getSellerid }' )|" href="javascript:;"  th:title="${seller.getSstatus()}">
+                                          <i class="layui-icon" th:if="${seller.getSstatus()}==1">&#xe601;</i>
+                                          <i class="layui-icon" th:if="${seller.getSstatus()}==0 or ${seller.getSstatus()}==null">&#xe62f;</i>
                                       </a>
-                                      <a title="编辑"  th:onclick="|xadmin.open('编辑','/sys/member-edit/'+${user.getId()},600,400)|" href="javascript:;">
+                                      <a title="编辑"  onclick="xadmin.open('编辑','member-edit.html',600,400)" href="javascript:;">
                                         <i class="layui-icon">&#xe642;</i>
                                       </a>
-<!--                                      <a onclick="xadmin.open('修改密码','member-password.html',600,400)" title="修改密码" href="javascript:;">-->
-<!--                                        <i class="layui-icon">&#xe631;</i>-->
-<!--                                      </a>-->
-                                      <a title="删除" th:onclick = "|javascript : member_del(this,'${user.getId}' )|" href="javascript:;">
+                                      <a onclick="xadmin.open('修改密码','member-password.html',600,400)" title="修改密码" href="javascript:;">
+                                        <i class="layui-icon">&#xe631;</i>
+                                      </a>
+                                      <a title="删除" th:onclick = "|javascript : member_del(this,'${seller.getSellerid}' )|" href="javascript:;">
                                         <i class="layui-icon">&#xe640;</i>
                                       </a>
                                     </td>
@@ -112,14 +110,14 @@
                             </table>
                         </div>
                         <div class="layui-card-body ">
-                            数据共[[${users.getTotal()}]]条 &nbsp;&nbsp;当前第[[${users.getPageNum()}]]页/共[[${users.getPages()}]]页
+                            数据共[[${sellers.getTotal()}]]条 &nbsp;&nbsp;当前第[[${sellers.getPageNum()}]]页/共[[${sellers.getPages()}]]页
                             <div class="page">
                                 <div>
-                                    <a class="num" th:href="@{/sys/member-list}">首页</a>
-                                    <a class="num" th:href="@{/sys/member-list(pageNum=${users.hasPreviousPage}?${users.prePage}:1)}">上一页</a>
-                                    <a class="num"><form><input th:value="${users.getPageNum()}" name="pageNum"> <button type="submit">跳转</button></form></a>
-                                    <a class="num" th:href="@{/sys/member-list(pageNum=${users.hasNextPage}?${users.nextPage}:${users.pages})}">下一页</a>
-                                    <a class="num" th:href="@{/sys/member-list(pageNum=${users.pages})}">尾页</a>
+                                    <a class="num" th:href="@{/sys/seller-list}">首页</a>
+                                    <a class="num" th:href="@{/sys/seller-list(pageNum=${sellers.hasPreviousPage}?${sellers.prePage}:1)}">上一页</a>
+                                    <a class="num"><form><input th:value="${sellers.getPageNum()}" name="pageNum"> <button type="submit">跳转</button></form></a>
+                                    <a class="num" th:href="@{/sys/seller-list(pageNum=${sellers.hasNextPage}?${sellers.nextPage}:${sellers.pages})}">下一页</a>
+                                    <a class="num" th:href="@{/sys/seller-list(pageNum=${sellers.pages})}">尾页</a>
                                 </div>
                             </div>
                         </div>
@@ -158,28 +156,17 @@
 
       });
 
-      // function pagetiao(){
-      //     let value = document.getElementsByName("zhi")[0].value;
-      //     console.log(value)
-      //     $.ajax({
-      //         url: "/sys/member-list", //后端地址
-      //         type: "GET",       //提交方式
-      //         data: {"pageNum": value}
-      //     })
-      //
-      // }
-
        /*用户-停用*/
       function member_stop(obj,id){
-          layer.confirm('确认要停用/启用吗？',function(index){
+          layer.confirm('确认要启用 / 停用吗？',function(index){
 
               if($(obj).attr('title')==1){
                   //发异步把用户状态进行更改
                   console.log($(obj).attr('title'))
                   $.ajax({
-                      url: '/sys/changeUserStates',
+                      url: '/sys/changeSellerStates',
                       type: 'post',
-                      data:{'state':0,'uid':id}
+                      data:{'state':0,'sid':id}
                   })
 
                   $(obj).attr('title','0')
@@ -191,9 +178,9 @@
               }else{
                   console.log($(obj).attr('title'))
                   $.ajax({
-                      url: '/sys/changeUserStates',
+                      url: '/sys/changeSellerStates',
                       type: 'post',
-                      data:{'state':1,'uid':id}
+                      data:{'state':1,'sid':id}
                   })
 
                   $(obj).attr('title','1')
@@ -202,7 +189,7 @@
                   $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');
                   layer.msg('已启用!',{icon: 5,time:1000});
               }
-
+              
           });
       }
 
@@ -211,9 +198,9 @@
           layer.confirm('确认要删除吗？',function(index){
               //发异步删除数据
               $.ajax({
-                  url: '/sys/userDelete',
+                  url: '/sys/sellerDelete',
                   type: 'GET',
-                  data:{'id':id}
+                  data:{'sid':id}
               }).done(function(dat) {
                   console.log(dat)
 
@@ -229,36 +216,35 @@
       }
 
 
-      /*用户-批量删除*/
+
       function delAll () {
-        // var ids = [];
-          var uids="";
-          $("[name='id']:checked").each(function(){
-              uids+=$(this).val()+",";
+          // var ids = [];
+          var sids="";
+          $("[name='sid']:checked").each(function(){
+              sids+=$(this).val()+",";
           })
-          uids = uids.substring(0, uids.length - 1);
-        layer.confirm('确认要删除吗？'+uids.toString(),function(index){
+          sids = sids.substring(0, sids.length - 1);
+          layer.confirm('确认要删除吗？'+sids.toString(),function(index){
+              //捉到所有被选中的，发异步进行删除
+              $.ajax({
+                  url: "/sys/sellerdelall", //后端地址
+                  type: "GET",       //提交方式
+                  data: {"sids": sids}
+              }).done(function(dat) {
+                  console.log(dat)
 
-            //捉到所有被选中的，发异步进行删除
-            $.ajax({
-                url: "/sys/userdelall", //后端地址
-                type: "GET",       //提交方式
-                data: {"uids": uids}
-            }).done(function(dat) {
-                console.log(dat)
-
-                if (dat.rid==1){
-                    layer.msg(dat.msg, {icon: 1});
-                    $(".layui-form-checked").not('.header').parents('tr').remove();
+                  if (dat.rid==1){
+                      layer.msg(dat.msg, {icon: 1});
+                      $(".layui-form-checked").not('.header').parents('tr').remove();
 
 
-                }else {
-                    layer.msg(dat.msg,{icon:1,time:1000});
-                }
+                  }else {
+                      layer.msg(dat.msg,{icon:1,time:1000});
+                  }
 
-            })
+              })
 
-        });
+          });
       }
     </script>
 </html>

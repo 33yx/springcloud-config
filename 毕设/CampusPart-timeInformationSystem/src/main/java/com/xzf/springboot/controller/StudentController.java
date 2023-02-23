@@ -48,7 +48,7 @@ public class StudentController {
     }
 
     //增加
-    @GetMapping("/sys/toUserList")
+    @PostMapping("/sys/toUserList")
     @ResponseBody
     public Result addUser(int uid,String username,String uname,int uage,String schooll,String studentid,String cardid,String usex,String phone, String address,String email,String pass){
         Result result=null;

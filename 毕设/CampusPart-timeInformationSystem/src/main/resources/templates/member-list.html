@@ -92,7 +92,7 @@
                                     <td class="td-status">
                                       <span th:class="${user.getStatus()}==1 ? 'layui-btn layui-btn-normal layui-btn-mini' : 'layui-btn layui-btn-normal layui-btn-mini layui-btn-disabled'">已启用</span></td>
                                     <td class="td-manage">
-                                      <a th:onclick = "|javascript : member_stop(this,'${ user.getId }' )|" href="javascript:;"  title="启用">
+                                      <a th:onclick = "|javascript : member_stop(this,'${ user.getId }' )|" href="javascript:;"  th:title="${user.getStatus()}">
                                           <i class="layui-icon" th:if="${user.getStatus()}==1">&#xe601;</i>
                                           <i class="layui-icon" th:if="${user.getStatus()}==0 or ${user.getStatus()}==null">&#xe62f;</i>
 

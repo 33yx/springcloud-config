@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.xzf.springboot.dao.SellerDao">
+
+    <select id="querySellerList" resultType="SellerAndCard">
+        select sellerid,sname,saddress,businesslicense,sphone,spasswoed,sstatus,ssex,semail,carid,cname,cage from sellertable left join cardtable on sellertable.sphone = cardtable.cphone group by sellerid asc
+    </select>
+
+
+    <delete id="deleteSeller" parameterType="int" >
+        delete from sellertable where sellerid=#{sellerid}
+    </delete>
+
+    <select id="queryUserListByphone" resultType="String">
+        select sellerid from sellertable where sphone=#{sphone}
+    </select>
+
+    <select id="querysellerByphone" resultType="String">
+        select sphone from sellertable where sellerid=#{sellerid}
+    </select>
+
+    <update id="changeSellerStates" parameterType="Integer">
+        update usertable set sstatus=#{sstatus} where sellerid=#{sellerid}
+    </update>
+
+
+</mapper>

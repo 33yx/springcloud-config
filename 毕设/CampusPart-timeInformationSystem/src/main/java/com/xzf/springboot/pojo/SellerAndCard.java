@@ -4,13 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Seller implements Serializable {
-
+public class SellerAndCard {
     private Integer sellerid;
 
     private String sname;
@@ -28,6 +25,12 @@ public class Seller implements Serializable {
     private String ssex;
 
     private String semail;
+
+    private String carid;
+
+    private String cname;
+
+    private String cage;
 
 
 }

@@ -5,5 +5,7 @@ import org.springframework.stereotype.Repository;
 
 @Mapper
 @Repository
-public interface JopDao {
+public interface CardDao {
+
+    public int deleteCard(String cphone);
 }
