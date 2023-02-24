@@ -100,7 +100,7 @@ public class ManagerController {
                 result=new Result(0001,"增加成功");
 
             }catch (Exception e){
-                result=new Result(0003,"增加失败");
+                result=new Result(0003,"增加失败(可能编号已经存在)");
             }
         }else {
             result=new Result(0002,"增加失败："+i+"账号已经存在");

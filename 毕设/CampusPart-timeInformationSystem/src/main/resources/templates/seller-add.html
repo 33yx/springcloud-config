@@ -21,44 +21,39 @@
         <div class="layui-fluid">
             <div class="layui-row">
                 <form class="layui-form">
+
                     <div class="layui-form-item">
                         <label class="layui-form-label">
                             <span class="x-red">*</span>编号id</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="uid" name="uid" required="" lay-verify="int" autocomplete="off" class="layui-input"></div>
+                            <input type="text" id="sid" name="sid" required="" lay-verify="Integer" autocomplete="off" class="layui-input"></div>
                     </div>
                     <div class="layui-form-item">
-                        <label for="username" class="layui-form-label">
+                        <label for="sellername" class="layui-form-label">
                             <span class="x-red">*</span>店铺名字</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="username" name="username" required="" lay-verify="nikename" autocomplete="off" class="layui-input"></div>
+                            <input type="text" id="sellername" name="sellername" required="" lay-verify="nikename" autocomplete="off" class="layui-input"></div>
                     </div>
                     <div class="layui-form-item">
-                        <label for="username" class="layui-form-label">
+                        <label for="srname" class="layui-form-label">
                             <span class="x-red">*</span>真实姓名</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="uname" name="uname" required="" lay-verify="String" autocomplete="off" class="layui-input"></div>
+                            <input type="text" id="srname" name="srname" required="" lay-verify="String" autocomplete="off" class="layui-input"></div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">
                             <span class="x-red">*</span>年龄</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="uage" name="uage" required="" lay-verify="int" autocomplete="off" class="layui-input"></div>
+                            <input type="text" id="sage" name="sage" required="" lay-verify="int" autocomplete="off" class="layui-input"></div>
                     </div>
                     <div class="layui-form-item">
-                        <label for="username" class="layui-form-label">
+                        <label for="business" class="layui-form-label">
                             <span class="x-red">*</span>营业执照</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="schooll" name="schooll" required="" lay-verify="String" autocomplete="off" class="layui-input"></div>
+                            <input type="text" id="business" name="business" required="" lay-verify="String" autocomplete="off" class="layui-input"></div>
                     </div>
-<!--                    <div class="layui-form-item">-->
-<!--                        <label class="layui-form-label">-->
-<!--                            <span class="x-red">*</span>学号</label>-->
-<!--                        <div class="layui-input-inline">-->
-<!--                            <input type="text" id="studentid" name="studentid" required="" lay-verify="int" autocomplete="off" class="layui-input"></div>-->
-<!--                    </div>-->
                     <div class="layui-form-item">
-                        <label for="username" class="layui-form-label">
+                        <label for="cardid" class="layui-form-label">
                             <span class="x-red">*</span>身份证号</label>
                         <div class="layui-input-inline">
                             <input type="text" id="cardid" name="cardid" required=""  lay-verify="cardidk" autocomplete="off" class="layui-input"></div>
@@ -66,8 +61,8 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label"><span class="x-red">*</span>性别</label>
                         <div class="layui-input-block">
-                            <input type="radio" name="usex" lay-skin="primary" title="男" value="男" >
-                            <input type="radio" name="usex" lay-skin="primary" title="女" value="女">
+                            <input type="radio" name="ssex" lay-skin="primary" title="男" value="男" >
+                            <input type="radio" name="ssex" lay-skin="primary" title="女" value="女">
                             <!--checkbox-->
                         </div>
                     </div>
@@ -75,19 +70,19 @@
                         <label class="layui-form-label">
                             <span class="x-red">*</span>手机号</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="phone" name="phone" required="" lay-verify="int" autocomplete="off" class="layui-input"></div>
+                            <input type="text" id="sphone" name="sphone" required="" lay-verify="int" autocomplete="off" class="layui-input"></div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">
                             <span class="x-red">*</span>地址（市,县/区）</label>
                         <div class="layui-input-inline">
-                            <input  type="text" id="address" name="address" required="" lay-verify="int" autocomplete="off" class="layui-input"></div>
+                            <input  type="text" id="saddress" name="saddress" required="" lay-verify="int" autocomplete="off" class="layui-input"></div>
                     </div>
                     <div class="layui-form-item">
-                        <label for="email" class="layui-form-label">
+                        <label for="semail" class="layui-form-label">
                             <span class="x-red">*</span>邮箱</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="email" name="email" required="" lay-verify="email" autocomplete="off" class="layui-input"></div>
+                            <input type="text" id="semail" name="semail" required="" lay-verify="email" autocomplete="off" class="layui-input"></div>
                         <div class="layui-form-mid layui-word-aux">
                             <span class="x-red">*</span>将会成为您唯一验证名</div></div>
                     <div class="layui-form-item">
@@ -117,7 +112,7 @@
                 var form = layui.form,
                 layer = layui.layer;
 
-                //自定义验证规则
+                自定义验证规则
                 form.verify({
                     nikename: function(value) {
                         if (value.length < 3) {
@@ -196,16 +191,16 @@
                     console.log(data);
                     //发异步，把数据提交给php
                     $.ajax({
-                        url: '/sys/toUserList',
+                        url: '/sys/toaddSeller',
                         type: 'post',
-                        data:{'uid':data.field.uid,'username':data.field.username,"uname":data.field.uname,"uage":data.field.uage,
-                            'schooll':data.field.schooll,'studentid':data.field.studentid,'cardid':data.field.cardid,'usex':data.field.usex,
-                            'phone':data.field.phone,'address':data.field.address,'email':data.field.email,'pass':data.field.pass}
+                        data:{'sellerid':data.field.sid,'sname':data.field.sellername,"businesslicense":data.field.business,'sphone':data.field.sphone,
+                            'spasswoed':data.field.pass,'ssex':data.field.ssex,"cname":data.field.srname,"cage":data.field.sage, 'carid':data.field.cardid,
+                            'saddress':data.field.saddress,'semail':data.field.semail}
                     })   .done(function(dat) {
                         console.log(dat)
 
                         if (dat.rid==1){
-                            layer.alert(dat.msg+data.field.username, {
+                            layer.alert(dat.msg+data.field.sellername, {
                                     icon: 6
                                 },
                                 function() {
@@ -217,7 +212,7 @@
                                 });
                         }
                         else {
-                            layer.alert(dat.msg+data.field.username, {
+                            layer.alert(dat.msg+data.field.sellername, {
                                     icon: 6
                                 },
                                 function() {

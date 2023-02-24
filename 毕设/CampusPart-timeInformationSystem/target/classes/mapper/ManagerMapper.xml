@@ -26,30 +26,32 @@
             <if test="startTime != null and startTime != ''">
                 AND datetime <![CDATA[ >= ]]> #{startTime}
             </if>
-<!--            <if test="endTime != null and endTime != ''">-->
-<!--                AND datetime <![CDATA[ <= ]]> #{endTime}-->
-<!--            </if>-->
+            <if test="endTime != null and endTime != ''">
+                AND datetime <![CDATA[ <= ]]> #{endTime}
+
+
+            </if>
             <if test="userName != null and userName != ''">
                 AND musername like '%${userName}%'
             </if>
-        </where>
-    </select>
+                    </where>
+                </select>
 
-    <insert id="addManager" parameterType="Manager">
-        insert into managertable (managerid,mphone,mpassword,musername,power,mrole,datetime) values(#{managerid},#{mphone},#{mpassword},#{musername},#{power},#{mrole},#{datetime})
-    </insert>
-    <update id="updateManager" parameterType="Manager">
-        update managertable set musername=#{musername},mphone=#{mphone},mpassword=#{mpassword},power=#{power},mrole=#{mrole} where managerid=#{managerid}
-    </update>
+                <insert id="addManager" parameterType="Manager">
+                    insert into managertable (managerid,mphone,mpassword,musername,power,mrole,datetime) values(#{managerid},#{mphone},#{mpassword},#{musername},#{power},#{mrole},#{datetime})
+                </insert>
+                <update id="updateManager" parameterType="Manager">
+                    update managertable set musername=#{musername},mphone=#{mphone},mpassword=#{mpassword},power=#{power},mrole=#{mrole} where managerid=#{managerid}
+                </update>
 
-    <update id="changeState" parameterType="Integer">
-        update managertable set state=#{state} where managerid=#{id}
-    </update>
+                <update id="changeState" parameterType="Integer">
+                    update managertable set state=#{state} where managerid=#{id}
+                </update>
 
 
 
-    <delete id="deleteManager" parameterType="int" >
-        delete from managertable where managerid=#{id}
-    </delete>
+                <delete id="deleteManager" parameterType="int" >
+                    delete from managertable where managerid=#{id}
+                </delete>
 
-</mapper>
+            </mapper>

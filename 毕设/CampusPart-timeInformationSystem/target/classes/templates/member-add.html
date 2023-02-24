@@ -197,7 +197,7 @@
                     //发异步，把数据提交给php
                     $.ajax({
                         url: '/sys/toUserList',
-                        type: 'GET',
+                        type: 'post',
                         data:{'uid':data.field.uid,'username':data.field.username,"uname":data.field.uname,"uage":data.field.uage,
                             'schooll':data.field.schooll,'studentid':data.field.studentid,'cardid':data.field.cardid,'usex':data.field.usex,
                             'phone':data.field.phone,'address':data.field.address,'email':data.field.email,'pass':data.field.pass}

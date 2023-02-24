@@ -7,4 +7,23 @@
         delete from cardtable where cphone=#{cphone}
     </delete>
 
+    <select id="querycard" resultType="com.xzf.springboot.pojo.Card">
+        select carid from cardtable where cphone=#{cphone}
+    </select>
+
+    <insert id="addCard" parameterType="com.xzf.springboot.pojo.Card">
+        insert into cardtable (carid,cname,cphone,cage) values(#{carid},#{cname},#{cphone},#{cage})
+    </insert>
+
+    <select id="querycardone" resultType="com.xzf.springboot.pojo.Card">
+        select * from cardtable where cphone=#{cphone}
+    </select>
+
+
+    <update id="updateCard" parameterType="com.xzf.springboot.pojo.Card">
+        update cardtable set carid=#{carid},cname=#{cname},cage=#{cage} where cphone=#{cphone}
+    </update>
+
+
+
 </mapper>

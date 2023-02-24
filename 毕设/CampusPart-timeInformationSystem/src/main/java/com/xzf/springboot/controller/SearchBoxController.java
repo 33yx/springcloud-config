@@ -1,5 +1,7 @@
 package com.xzf.springboot.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xzf.springboot.pojo.Manager;
 import com.xzf.springboot.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +24,17 @@ public class SearchBoxController {
     public String queryManagerList(@RequestParam("start") String start,
                                    @RequestParam("end") String end,
                                    @RequestParam("username") String username,
-                                    Model model
+                                    Model model,@RequestParam(defaultValue = "1",value = "pageNum")int pageNum
                                    ){
+        PageHelper.startPage(pageNum,5);
 
         System.out.println(start+"____"+end);
 
         List<Manager> managers = managerService.search(start, end,username);
 
-        model.addAttribute("managers",managers);
+        PageInfo<Manager> page=new PageInfo<>(managers);
+
+        model.addAttribute("managers",page);
         return "admin-list";
 
     }

@@ -138,7 +138,7 @@ public class StudentController {
         Integer u=null;
         Result result=null;
 
-        System.out.println(user);
+
         u=userService.updateUser(user);
         System.out.println("修改后为"+u);
 
