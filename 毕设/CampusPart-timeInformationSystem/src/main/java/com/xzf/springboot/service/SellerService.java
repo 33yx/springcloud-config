@@ -24,4 +24,6 @@ public interface SellerService {
 
     int updataSellerAC(SellerAndCard sellerAndCard);
 
+    List<SellerAndCard> searchSeller(String sname,String sphone);
+
 }

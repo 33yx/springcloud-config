@@ -333,6 +333,9 @@ layui.use(['layer','element','jquery'],function() {
         $('#tab_show').hide();
     });
 
+
+
+
     // 页面加载完要做的
     xadmin.end();
 })

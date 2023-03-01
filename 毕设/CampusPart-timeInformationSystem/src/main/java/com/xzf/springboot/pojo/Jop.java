@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 @Data
 @AllArgsConstructor
@@ -22,23 +22,26 @@ public class Jop implements Serializable {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
     private Timestamp pubdate;
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
-    private Timestamp stardate;
+//    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
+//    private Timestamp stardate;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
     private Timestamp enddate;
 
-    private Integer number;
-
     private String jobdescription;
+
+    private Integer number;
 
     private String salary;
 
     private String address;
 
-    private String examine;
+    private Integer examine;
 
-    private String order;
+    private String ouserid;
 
-    private Integer ouserid;
+    private Integer valid;
+
+    private  String errorreason;
+
 }

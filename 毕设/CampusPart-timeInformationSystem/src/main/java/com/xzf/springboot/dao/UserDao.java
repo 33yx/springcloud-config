@@ -32,6 +32,9 @@ public interface UserDao {
     Integer changeUserStates(Integer state,int id);
 
 
+    User queryUserToLogin(String phone,String password);
+
+
 
 
 

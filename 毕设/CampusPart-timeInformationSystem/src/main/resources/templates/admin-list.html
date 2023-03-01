@@ -106,7 +106,8 @@
                                 <div>
                                   <a class="num" th:href="@{/sys/admin-list}">首页</a>
                                   <a class="num" th:href="@{/sys/admin-list(pageNum=${managers.hasPreviousPage}?${managers.prePage}:1)}">上一页</a>
-                                  <a class="num" th:href="@{/sys/admin-list(pageNum=${managers.hasNextPage}?${managers.nextPage}:${managers.pages})}">下一页</a>
+                                    <a class="num"><form><input th:value="${managers.getPageNum()}" name="pageNum"> <button type="submit">跳转</button></form></a>
+                                    <a class="num" th:href="@{/sys/admin-list(pageNum=${managers.hasNextPage}?${managers.nextPage}:${managers.pages})}">下一页</a>
                                   <a class="num" th:href="@{/sys/admin-list(pageNum=${managers.pages})}">尾页</a>
                                 </div>
                             </div>
@@ -159,19 +160,6 @@
                       type: 'post',
                       data:{'state':0,'mid':id}
                   })
-                  //     .done(function(dat) {
-                  //     console.log(dat)
-                  //
-                  //     if (dat.rid==1){
-                  //         $(obj).find('i').html('&#xe62f;');
-                  //
-                  //         $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已停用');
-                  //         layer.msg('已停用!',{icon: 5,time:1000});
-                  //     }else {
-                  //         layer.msg(dat.msg,{icon:1,time:1000});
-                  //     }
-                  //
-                  // })
 
                 $(obj).attr('title','0')
                   $(obj).find('i').html('&#xe62f;');
@@ -240,7 +228,7 @@
               mids+=$(this).val()+",";
           })
           mids = mids.substring(0, mids.length - 1);
-          console.log(mids)
+
 
           layer.confirm('确认要删除吗？',function(index){
               //捉到所有被选中的，发异步进行删除

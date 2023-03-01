@@ -8,12 +8,10 @@ import com.xzf.springboot.pojo.SellerAndCard;
 import com.xzf.springboot.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.util.StringUtils;
 
 import java.util.List;
 
 import static java.lang.String.valueOf;
-import static org.thymeleaf.util.StringUtils.isEmpty;
 
 @Service
 public class SellerServiceImpl implements SellerService {
@@ -187,6 +185,21 @@ public class SellerServiceImpl implements SellerService {
 
 
         return r;
+    }
+
+    @Override
+    public List<SellerAndCard> searchSeller(String sname, String sphone) {
+
+        List<SellerAndCard> sellers=null;
+        try {
+            sellers=sellerDao.searchSeller(sname,sphone);
+
+        }catch (Exception e){
+            sellers=null;
+            System.out.println(e);
+        }
+
+        return sellers;
     }
 
 

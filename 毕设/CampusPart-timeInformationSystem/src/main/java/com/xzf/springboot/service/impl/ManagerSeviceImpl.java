@@ -59,10 +59,11 @@ public class ManagerSeviceImpl implements ManagerService {
     public List<Manager> search(String startTime, String endTime,String userName) {
         List<Manager> search=null;
         try{
-            System.out.println("开始进入搜索");
+
             search = managerDao.search(startTime, endTime,userName);
-            System.out.println("搜索结果为："+search);
+
         }catch (Exception e){
+            search=null;
             System.out.println("查询报错为："+e);
         }
         return search;

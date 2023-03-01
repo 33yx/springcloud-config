@@ -21,6 +21,7 @@ public class UserServiceImpl implements UserService {
             userList=userDao.queryUserList();
 
         }catch (Exception e){
+            userList=null;
             System.out.println(e);
         }
 
@@ -34,6 +35,7 @@ public class UserServiceImpl implements UserService {
         try {
             user =userDao.queryUserListById(id);
         }catch (Exception e){
+            user=null;
             System.out.println(e);
         }
 
@@ -79,7 +81,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int deleteUser(int id) {
+    public Integer deleteUser(int id) {
         Integer d=null;
         try {
             d =userDao.deleteUser(id);
@@ -99,5 +101,17 @@ public class UserServiceImpl implements UserService {
             System.out.println(e);
         }
         return s;
+    }
+
+    @Override
+    public User queryUserToLogin(String phone, String password) {
+        User user=null;
+        try{
+            user=userDao.queryUserToLogin(phone,password);
+
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return user;
     }
 }

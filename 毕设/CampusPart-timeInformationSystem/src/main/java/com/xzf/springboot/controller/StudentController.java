@@ -38,7 +38,7 @@ public class StudentController {
         if (!StringUtils.isEmpty(String.valueOf(users))){
             PageInfo<User> page=new PageInfo<>(users);
             model.addAttribute("users",page);
-            System.out.println(page);
+//            System.out.println(page);
             return "member-list";
 
         }else {
@@ -98,15 +98,16 @@ public class StudentController {
     @ResponseBody
     public Result userDelallall(String uids){
         Result result=null;
-        int d=0;
+        Integer d=0;
+        Integer s=0;
         String [] uidlist=uids.split(",");
         for (int i=0;i<uidlist.length;i++){
             d=userService.deleteUser(Integer.parseInt(uidlist[i]));
-            d+=1;
+            s+=d;
         }
 
-        if (d!=0){
-            result=new Result(0001,"删除成功");
+        if (s!=0 && s!=null){
+            result=new Result(0001,"删除成功，共删除"+s+"条");
         }else{
             result=new Result(0002,"删除失败");
         }

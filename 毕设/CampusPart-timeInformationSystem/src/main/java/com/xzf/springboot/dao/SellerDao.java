@@ -34,4 +34,5 @@ public interface SellerDao {
     Integer updateSeller(Seller seller);
 
 
+    List<SellerAndCard> searchSeller(String sname,String sphone);
 }

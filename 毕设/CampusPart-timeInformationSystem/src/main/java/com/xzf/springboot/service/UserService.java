@@ -20,12 +20,12 @@ public interface UserService {
     int updateUser(User user);
 
     //删除用户
-    int deleteUser(int id);
+    Integer deleteUser(int id);
 
     //改变转态
     Integer changeUserStates(Integer state,int id);
 
-
+    User queryUserToLogin(String phone,String password);
 
 
 

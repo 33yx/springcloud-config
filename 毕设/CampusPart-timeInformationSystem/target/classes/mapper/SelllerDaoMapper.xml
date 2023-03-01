@@ -25,6 +25,19 @@
     </select>
 
 
+    <select id="searchSeller" resultType="com.xzf.springboot.pojo.SellerAndCard">
+        select sellerid,sname,saddress,businesslicense,sphone,spasswoed,sstatus,ssex,semail,carid,cname,cage from sellertable left join cardtable on sellertable.sphone = cardtable.cphone
+        <where>
+           <if test="sname != null and sname != ''">
+               AND sname like '%${sname}%'
+           </if>
+           <if test="sphone != null and sphone != ''">
+               AND sphone =#{sphone}
+           </if>
+       </where>
+        group by sellerid asc
+    </select>
+
     <update id="changeSellerStates" parameterType="Integer">
         update sellertable set sstatus=#{sstatus} where sellerid=#{sellerid}
     </update>
