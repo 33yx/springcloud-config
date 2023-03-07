@@ -3,8 +3,9 @@ package com.xzf.springboot.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xzf.springboot.pojo.Card;
-import com.xzf.springboot.pojo.Result;
+import com.xzf.springboot.pojo.tool.Result;
 import com.xzf.springboot.pojo.Seller;
+import com.xzf.springboot.pojo.tool.ResultSeller;
 import com.xzf.springboot.pojo.SellerAndCard;
 import com.xzf.springboot.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.thymeleaf.util.StringUtils;
 
 import java.util.List;
 
+@CrossOrigin
 @Controller
 public class SellerController {
 
@@ -173,6 +175,25 @@ public class SellerController {
 
         return result;
     }
+
+
+    @PostMapping("/fore/sellersearch")
+    @ResponseBody
+    public ResultSeller sellerrearch(String email, String password ){
+        SellerAndCard seller=null;
+        ResultSeller resultSeller=null;
+
+        System.out.println("上级");
+        seller = sellerService.sellerall(email,password);
+
+        if (seller!=null){
+            resultSeller=new ResultSeller(0001,seller);
+        }else {
+            resultSeller=new ResultSeller(0002,null);
+        }
+        return resultSeller;
+    }
+
 
 
 }

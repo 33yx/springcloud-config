@@ -100,7 +100,7 @@
                       <button th:if="${jopd.getExamine()==0 and jopd.getValid()==1}" class="layui-btn" lay-filter="pass" lay-submit="">
                           通过
                       </button>
-                      <button th:if="${jopd.getExamine()==0 and jopd.getValid()==1}" th:value="${jopd.getErrorreason()}" style=" ForeColor:blue;background-color:red"  class="layui-btn" lay-filter="notpass" lay-submit="" lay-verify="btn">
+                      <button th:if="${jopd.getExamine()==0 and jopd.getValid()==1}" th:value="${jopd.getErrorreason()}" style=" ForeColor:blue;background-color:red"  class="layui-btn" lay-filter="notpass" lay-submit="" lay-verify="btns">
                           不通过
                       </button>
                   </div>
@@ -115,17 +115,17 @@
                 var form = layui.form,
                 layer = layui.layer;
 
-                //自定义验证规则
-                form.verify({
-                    btn:function (value){
-                        var input=document.getElementById("errorreason").value;
-                        if (input.length == 0) {
-                            return '不通过的原因是？';
-
-                        }
-                    }
-
-                }),
+                // //自定义验证规则
+                // form.verify({
+                //     btns:function (value){
+                //         var input=document.getElementById("errorreason").value;
+                //         if (input.length == 0) {
+                //             return '不通过的原因是？';
+                //
+                //         }
+                //     }
+                //
+                // }),
 
 
                 //监听提交

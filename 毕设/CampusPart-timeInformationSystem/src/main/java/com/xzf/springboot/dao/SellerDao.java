@@ -35,4 +35,12 @@ public interface SellerDao {
 
 
     List<SellerAndCard> searchSeller(String sname,String sphone);
+
+    Seller querySellerToLogin(String phone,String password);
+
+
+    SellerAndCard sellerall(String phone,String password);
+
+    Integer queryqSellertByphone(String sphone );
+
 }

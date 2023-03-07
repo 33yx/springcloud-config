@@ -67,7 +67,7 @@
 <!--                            <button class="layui-btn" onclick="xadmin.open('添加用户','./order-add.html',800,600)">-->
 <!--                                <i class="layui-icon"></i>添加</button>-->
                         </div>
-                        <div class="layui-card-body ">
+                        <div class="layui-card-body layui-table-body layui-table-main">
                             <table class="layui-table layui-form">
                                 <thead>
                                     <tr>
@@ -81,7 +81,7 @@
 <!--                                        <th>工作介绍</th>-->
                                         <th>现需要人数</th>
                                         <th>酬劳（每小时）</th>
-                                        <th>接单人id</th>
+<!--                                        <th>接单人id</th>-->
                                         <th>发布时间</th>
                                         <th>截止时间</th>
                                         <th>审核</th>
@@ -100,7 +100,7 @@
 <!--                                        <td th:text="${jop.getJobdescription()}"></td>-->
                                         <td th:text="${jop.getNumber()}"></td>
                                         <td th:text="${jop.getSalary()}"></td>
-                                        <td th:text="${jop.getOuserid()}"></td>
+<!--                                        <td th:text="${jop.getOuserid()}"></td>-->
                                         <td th:text="${jop.getPubdate()}"></td>
                                         <td th:text="${jop.getEnddate()}"></td>
                                         <td id="shenghen" class="td-status" th:switch="${jop.getExamine()}">
@@ -134,11 +134,11 @@
                             数据共[[${jops.getTotal()}]]条 &nbsp;&nbsp;当前第[[${jops.getPageNum()}]]页/共[[${jops.getPages()}]]页
                             <div class="page">
                                 <div>
-                                    <a class="num" th:href="@{/sys/admin-list}">首页</a>
-                                    <a class="num" th:href="@{/sys/admin-list(pageNum=${jops.hasPreviousPage}?${jops.prePage}:1)}">上一页</a>
+                                    <a class="num" th:href="@{/sys/order-list}">首页</a>
+                                    <a class="num" th:href="@{/sys/order-list(pageNum=${jops.hasPreviousPage}?${jops.prePage}:1)}">上一页</a>
                                     <a class="num"><form><input th:value="${jops.getPageNum()}" name="pageNum"> <button type="submit">跳转</button></form></a>
-                                    <a class="num" th:href="@{/sys/admin-list(pageNum=${jops.hasNextPage}?${jops.nextPage}:${jops.pages})}">下一页</a>
-                                    <a class="num" th:href="@{/sys/admin-list(pageNum=${jops.pages})}">尾页</a>
+                                    <a class="num" th:href="@{/sys/order-list(pageNum=${jops.hasNextPage}?${jops.nextPage}:${jops.pages})}">下一页</a>
+                                    <a class="num" th:href="@{/sys/order-list(pageNum=${jops.pages})}">尾页</a>
                                 </div>
                             </div>
                         </div>

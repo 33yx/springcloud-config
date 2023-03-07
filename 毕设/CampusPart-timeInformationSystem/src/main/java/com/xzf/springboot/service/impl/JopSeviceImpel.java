@@ -32,6 +32,30 @@ public class JopSeviceImpel implements JopService {
     }
 
     @Override
+    public List<Jop> queryqJopList() {
+        List<Jop> jopList=null;
+       try{
+           jopList=jopDao.queryqJopList();
+       }catch (Exception e){
+        jopList=null;
+        System.out.println(e);
+       }
+        return jopList;
+    }
+
+    @Override
+    public List<Jop> queryqJopEnddate() {
+        List<Jop> jopList=null;
+        try{
+            jopList=jopDao.queryqJopEnddate();
+        }catch (Exception e){
+            jopList=null;
+            System.out.println(e);
+        }
+        return jopList;
+    }
+
+    @Override
     public Jop queryjopListById(int id) {
         Jop jop=null;
         try{
@@ -98,5 +122,61 @@ public class JopSeviceImpel implements JopService {
         }
 
         return search;
+    }
+
+    @Override
+    public Integer addjop(Jop jop) {
+        Integer r=null;
+        try{
+            r=jopDao.addjop(jop);
+
+        }catch (Exception e){
+            r=null;
+            System.out.println(e);
+        }
+        return r;
+    }
+
+    @Override
+    public Integer changleVaild(Jop jop) {
+        Integer j=null;
+
+        try{
+            j=jopDao.changleVaild(jop);
+
+        }catch (Exception e){
+            j=null;
+            System.out.println(e);
+        }
+        return j;
+    }
+
+    @Override
+    public Integer updataNumber(Jop jop) {
+        Integer n=null;
+
+        try{
+            n=jopDao.updataNumber(jop);
+
+        }catch (Exception e){
+            n=null;
+            System.out.println(e);
+        }
+        return n;
+
+
+    }
+
+    @Override
+    public List<Jop> queryjopbyphone(String phone) {
+        List<Jop> jops=null;
+        try {
+            jops=jopDao.queryjopbyphone(phone);
+        }catch (Exception e){
+            jops=null;
+            System.out.println(e);
+        }
+
+        return jops;
     }
 }

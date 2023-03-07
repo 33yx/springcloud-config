@@ -2,9 +2,9 @@ package com.xzf.springboot.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.xzf.springboot.pojo.Manager;
-import com.xzf.springboot.pojo.Result;
+import com.xzf.springboot.pojo.tool.Result;
 import com.xzf.springboot.pojo.User;
+import com.xzf.springboot.pojo.tool.ResultLogin;
 import com.xzf.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +14,7 @@ import org.thymeleaf.util.StringUtils;
 
 import java.util.List;
 
-
+@CrossOrigin
 @Controller
 public class StudentController {
 
@@ -57,9 +57,9 @@ public class StudentController {
 
         Integer i=userService.queryUserListByphone(phone);
 
-        System.out.println("判断是否存在"+i);
+
         if (i==null){
-            System.out.println("进入赋值");
+
             user.setId(uid);
             user.setUsename(username);
             user.setUname(uname);
@@ -75,7 +75,6 @@ public class StudentController {
             user.setPassword(pass);
             u=userService.addUser(user);
 
-            System.out.println("是否有进行查询："+u);
         }else {
             result=new Result(0002,"增加失败："+i+"账号已经存在");
         }
@@ -184,6 +183,22 @@ public class StudentController {
         }
 
         return string;
+    }
+
+    @PostMapping("/fore/usersearch")
+    @ResponseBody
+    public ResultLogin usersearch(String email,String password ){
+        System.out.println("控制层进入");
+        User user = null;
+        ResultLogin resultLogin=null;
+        user = userService.queryUserToLogin(email, password);
+        if (user!=null){
+            resultLogin=new ResultLogin(0001,null,user,null,"成功");
+        }else {
+            resultLogin=new ResultLogin(0002,null,null,null,"系统错误");
+        }
+
+        return resultLogin;
     }
 
 }

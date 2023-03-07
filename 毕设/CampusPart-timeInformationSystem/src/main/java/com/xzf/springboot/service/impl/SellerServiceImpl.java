@@ -202,5 +202,45 @@ public class SellerServiceImpl implements SellerService {
         return sellers;
     }
 
+    @Override
+    public Seller querySellerToLogin(String phone, String password) {
+        Seller seller=null;
+        try{
+            seller=sellerDao.querySellerToLogin(phone,password);
+
+        }catch (Exception e){
+            seller=null;
+            System.out.println(e);
+        }
+        return seller;
+    }
+
+    @Override
+    public SellerAndCard sellerall(String phone, String password) {
+
+        SellerAndCard sellerAndCard=null;
+
+        try{
+            sellerAndCard=sellerDao.sellerall(phone,password);
+        }catch (Exception e){
+            sellerAndCard=null;
+            System.out.println(e);
+        }
+        return sellerAndCard;
+    }
+
+    @Override
+    public Integer querySellertByphone(String phone) {
+        Integer sid=null;
+        try {
+            sid=sellerDao.queryqSellertByphone(phone);
+
+        }catch (Exception e){
+            sid=null;
+            System.out.println("+告诉我"+e);
+        }
+        return sid;
+    }
+
 
 }

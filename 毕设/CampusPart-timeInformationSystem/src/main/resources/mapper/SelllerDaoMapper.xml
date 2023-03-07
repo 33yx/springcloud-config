@@ -20,6 +20,10 @@
         select sphone from sellertable where sellerid=#{sellerid}
     </select>
 
+    <select id="queryqSellertByphone" resultType="Integer">
+        select sellerid from sellertable where sphone=#{sphone}
+    </select>
+
     <select id="queryssellerById" resultType="com.xzf.springboot.pojo.Seller">
         select * from sellertable where sellerid=#{sellerid}
     </select>
@@ -49,6 +53,23 @@
     <update id="updateSeller" parameterType="com.xzf.springboot.pojo.Seller">
         update sellertable set sname=#{sname},saddress=#{saddress},businesslicense=#{businesslicense},sphone=#{sphone},spasswoed=#{spasswoed},ssex=#{ssex},semail=#{semail} where sellerid=#{sellerid}
     </update>
+
+    <select id="querySellerToLogin" resultType="com.xzf.springboot.pojo.Seller">
+        select * from sellertable where sphone=#{phone} and spasswoed=#{password}
+    </select>
+
+    <select id="sellerall" resultType="com.xzf.springboot.pojo.SellerAndCard">
+        select sellerid,sname,saddress,businesslicense,sphone,spasswoed,sstatus,ssex,semail,carid,cname,cage from sellertable left join cardtable on sellertable.sphone = cardtable.cphone
+        <where>
+            AND spasswoed =#{password}
+
+            AND sphone =#{phone}
+
+        </where>
+    </select>
+
+
+
 
 
 </mapper>

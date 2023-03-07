@@ -1,31 +1,20 @@
 package com.xzf.springboot.controller;
 
-import com.xzf.springboot.mongodb.JobDescription;
 import com.xzf.springboot.pojo.*;
-import com.xzf.springboot.service.JopService;
-import com.xzf.springboot.service.ManagerService;
-import com.xzf.springboot.service.SellerService;
-import com.xzf.springboot.service.UserService;
+import com.xzf.springboot.pojo.tool.Result;
+import com.xzf.springboot.pojo.tool.ResultCode;
+import com.xzf.springboot.pojo.tool.ResultLogin;
+import com.xzf.springboot.service.*;
+import com.xzf.springboot.tool.EmailUtil;
+import com.xzf.springboot.tool.ValidateCodeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @CrossOrigin
 @Controller
@@ -41,11 +30,14 @@ public class LoginController {
     private SellerService sellerService;
 
     @Autowired
-    private JopService jopService;
+    private Emailservice emailservice;
+
+//    @Autowired
+//    private JopService jopService;
 
 
     @PostMapping("/sys/index")
-    public String login(@RequestParam("username") String username, @RequestParam("password") String password, HttpSession session, Model model) {
+    public String login(@RequestParam("username") String username, @RequestParam("password") String password,HttpSession session, Model model) {
 
 //        System.out.println(username+"    :  "+password);
 
@@ -76,27 +68,44 @@ public class LoginController {
     }
 
     //前端登陆
-    @PostMapping("/sys/indexss")
+    @PostMapping("/fore/indexss")
     @ResponseBody
     public ResultLogin loginsdutent(String email, String password, Integer identity, HttpSession session) {
         User user = null;
+        Seller seller=null;
         ResultLogin resultLogin=null;
 
         if (identity == 1) {//学生
+
             user = userService.queryUserToLogin(email, password);
-            if (!StringUtils.isEmpty(user.getPhone()) & !StringUtils.isEmpty(user.getPassword()) & user.getStatus() == 1) {
-                session.setAttribute("loginUser", user);
-                session.setAttribute("state", user.getStatus());
+            if (user !=null){
+                if (user.getStatus() == 1) {
+                    session.setAttribute("loginUser", user);
+                    session.setAttribute("state", user.getStatus());
 
-                resultLogin=new ResultLogin(0001,identity,user,null);
-
-            } else if (identity == 2) {//商户
-
+                    resultLogin=new ResultLogin(0001,identity,user,null,"成功");
+                }else {
+                    resultLogin=new ResultLogin(0002,null,null,null,"账号不可用");
+                }
+            }else {
+                resultLogin=new ResultLogin(0002,null,null,null,"账号或密码不正确");
             }
+        }
+        else if (identity == 2) {//商户
+            seller = sellerService.querySellerToLogin(email, password);
+            if (seller !=null){
+                if (seller.getSstatus() == 1) {
+                    session.setAttribute("loginUser", seller);
+                    session.setAttribute("state", seller.getSstatus());
 
-
-
-
+                    resultLogin=new ResultLogin(0003,identity,null,seller,"成功");
+                }
+                else {
+                    resultLogin=new ResultLogin(0002,null,null,null,"账号不可用");
+                }
+            }else {
+                resultLogin=new ResultLogin(0002,null,null,null,"账号或密码不正确");
+            }
 
         }
         return resultLogin;
@@ -120,21 +129,71 @@ public class LoginController {
 //
 //    }
 
+    @PostMapping("/fore/sendMsg")
+    @ResponseBody
+    public ResultCode sendMsg(String email, String uphone, HttpSession session){
+        //获取邮箱
+        String phone = email;
+
+
+        String i=uphone;
+        ResultCode result=null;
+        if(!StringUtils.isEmpty(phone)){
+            //生成随机的4位验证码
+            String code = ValidateCodeUtils.generateValidateCode(4).toString();
+            //调用自己封装的qq邮箱发送器发送邮箱
+
+            emailservice.sendemail(phone,code);
+
+//            EmailUtil.sendAuthCodeEmail(phone,code);
+
+
+            //需要将验证码保存到session中
+
+            session.setMaxInactiveInterval(60); //设置session有效期 60秒,这里以后可能会用redis,所以先不设置！
+            result= new ResultCode(0001,"邮箱验证码发送成功",code);
+        }else {
+            result=new ResultCode(0002,"邮箱发送失败",null);
+        }
+
+        return result;
+    }
 
 
 
 
+    @PostMapping("/fore/addusera")
+    @ResponseBody
+    public Result addu(String uemail, String uname, String address, String usename, Integer useage, String schoollname, String studentid, String cardid, String phone, String password, String usex, String code, HttpServletRequest request){//
+        Result result=null;
+        User user=new User();
+        int u=0;
+        Integer i=null;
 
-//    @GetMapping("/sys/addusera")
-//    @ResponseBody
-//    public Result addu(User user){
-//        System.out.println("成功进入");
-//        System.out.println(user);
-//
-//        Result result=new Result(0001,"成功");
-//
-//        return result;
-//    }
+
+            i=userService.queryUserListByphone(phone);
+            if (i==null){
+                user.setUsename(usename);
+                user.setUname(uname);
+                user.setUseage(useage);
+                user.setSchoollname(schoollname);
+                user.setStudentid(studentid);
+                user.setStatus(1);
+                user.setCardid(cardid);
+                user.setUsex(usex);
+                user.setPhone(phone);
+                user.setAddress(address);
+                user.setUemail(uemail);
+                user.setPassword(password);
+                u=userService.addUser(user);
+                result=new Result(0001,"注册成功");
+            }else {
+                result=new Result(0002,"注册失败");
+            }
+
+
+        return result;
+    }
 
 
 

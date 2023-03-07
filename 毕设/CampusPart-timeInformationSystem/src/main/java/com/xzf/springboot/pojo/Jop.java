@@ -17,7 +17,7 @@ public class Jop implements Serializable {
 
     private String joptype;
 
-    private String sellerid;
+    private String sellerid;//电话，账号xzf
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
     private Timestamp pubdate;

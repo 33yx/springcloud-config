@@ -110,6 +110,7 @@ public class UserServiceImpl implements UserService {
             user=userDao.queryUserToLogin(phone,password);
 
         }catch (Exception e){
+            user=null;
             System.out.println(e);
         }
         return user;

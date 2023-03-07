@@ -3,7 +3,7 @@ package com.xzf.springboot.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xzf.springboot.pojo.Manager;
-import com.xzf.springboot.pojo.Result;
+import com.xzf.springboot.pojo.tool.Result;
 import com.xzf.springboot.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,9 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class ManagerController {

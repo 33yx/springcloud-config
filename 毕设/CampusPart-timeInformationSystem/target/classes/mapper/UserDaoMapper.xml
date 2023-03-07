@@ -15,6 +15,7 @@
     <select id="queryUserListByphone" resultType="User">
         select id from usertable where phone=#{phone}
     </select>
+
     <select id="queryUserToLogin" resultType="User">
         select * from usertable where phone=#{phone} and password=#{password}
     </select>

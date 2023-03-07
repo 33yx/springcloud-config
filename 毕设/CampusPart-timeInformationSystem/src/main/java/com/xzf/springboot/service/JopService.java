@@ -8,6 +8,10 @@ public interface JopService {
 
     List<Jop> queryJopList();
 
+    List<Jop> queryqJopList();
+
+    List<Jop> queryqJopEnddate();
+
     Jop queryjopListById(int id);
 
     Integer updateJopExamine(int jopid ,int examine);
@@ -17,5 +21,14 @@ public interface JopService {
     Integer deleteJop(int jopid);
 
     List<Jop> searchJop(String startTime,String endTime,Integer jopid,Integer examine,Integer valid,Integer  sellerid);
+
+    Integer addjop(Jop jop);
+
+
+    Integer changleVaild(Jop jop);
+
+    Integer updataNumber(Jop jop);
+
+    List<Jop> queryjopbyphone(String phone);
 
 }
