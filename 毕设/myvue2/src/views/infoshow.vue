@@ -59,7 +59,7 @@
 
       <el-button v-if="by==0" @click="eidt"  type="primary" >确认</el-button>
 
-      <el-button type="primary" icon="el-icon-caret-left">还回</el-button>
+      <el-button type="primary" @click="cancel" icon="el-icon-caret-left">还回</el-button>
     </div>
 
   </div>
@@ -75,7 +75,6 @@ export default {
     msg: String
   },
   data(){
-
     return{
       by:1,
       name:"",
@@ -93,9 +92,95 @@ export default {
       stuid:"",
       ssname:"",
       sbus:"",
+      rphone:"",
+      rpassord:"",
+
 
     };
-  },methods:{
+  },
+  created(){
+    var count=0
+    let _this=this
+
+    if(sessionStorage.getItem("unt")==='1'){
+
+    }else {
+
+      sessionStorage.setItem("unt",count)
+    }
+
+    if (sessionStorage.getItem("unt")==='0') {
+
+       _this.rphone=this.$route.params.phone,
+       _this.rpassord=this.$route.params.password,
+       _this.identity=this.$route.params.identity
+
+      count=1
+      sessionStorage.setItem("unt",count)
+
+      sessionStorage.setItem('phone', _this.$route.params.phone); //初次收到userKey，存起来
+      sessionStorage.setItem('rpassword',_this.$route.params.password);
+      sessionStorage.setItem('ridentity',_this.$route.params.identity);
+
+
+    }else {
+
+      _this.rphone = sessionStorage.getItem('phone')
+      _this.rpassord = sessionStorage.getItem('rpassword')
+      _this.identity = sessionStorage.getItem('ridentity')
+
+    }
+
+
+
+    if (this.identity==1){
+      axios.post(this.api.url+'/fore/usersearch?email='+this.rphone+"&password="+this.rpassord)
+        .then(function (response) {
+          _this.tel=response.data.user.phone
+          _this.password=response.data.user.password
+          _this.mail=response.data.user.uemail
+          _this.school=response.data.user.schoollname
+          _this.stuid=response.data.user.studentid
+          _this.caidid=response.data.user.cardid
+          _this.sex=response.data.user.usex
+          _this.adress=response.data.user.address
+          _this.relname=response.data.user.uname
+          _this.username=response.data.user.usename
+
+          _this.age=response.data.user.useage
+
+
+
+        });
+    }
+
+    if(this.identity==2){
+      axios.post(this.api.url+'/fore/sellersearch?email='+this.rphone+"&password="+this.rpassord)
+        .then(function (response) {
+           console.log("进入还回")
+          _this.tel=response.data.sellerAndCard.sphone
+          _this.password=response.data.sellerAndCard.spasswoed
+          _this.mail=response.data.sellerAndCard.semail
+          _this.caidid=response.data.sellerAndCard.carid
+          _this.sex=response.data.sellerAndCard.ssex
+          _this.adress=response.data.sellerAndCard.saddress
+          _this.relname=response.data.sellerAndCard.cname
+          _this.username=response.data.sellerAndCard.sname
+          _this.age=response.data.sellerAndCard.cage
+          _this.sbus=response.data.sellerAndCard.businesslicense
+        });
+    }
+
+  },
+  beforeDestroy () {
+//毁灭前先移除掉，否则我跳转到其它地方，sessionStorage里面依旧存在着userKey
+    sessionStorage.removeItem('unt')
+    sessionStorage.removeItem('phone')
+    sessionStorage.removeItem('ridentity')
+    sessionStorage.removeItem('rpassword')
+  },
+
+  methods:{
     postData() {
       console.log(this.user);
     },
@@ -111,9 +196,6 @@ export default {
 
       this.by=1;
     },
-
-
-
     //点击完成按钮触发handlefinish
     handlefinish:function()
     {
@@ -123,7 +205,7 @@ export default {
       }
       else if(this.password===''){
         alert("密码不能为空");
-      }
+      }y
       else if(this.mail===''){
         alert("邮箱不能为空");
       }
@@ -176,6 +258,22 @@ export default {
         localStorage.setItem('s',"false");
         this.$router.replace('/Login');//完成注册后跳转至登录页面
       }
+    },
+
+    cancel(){
+      let _this=this
+      _this.$router.push({
+        path: '/main',
+        name:'maim',
+        params:{
+          uname:_this.rphone,
+          password:_this.rpassord,
+          username:_this.username,
+          identity:_this.identity
+        }
+
+
+      })
     }
   }
 };

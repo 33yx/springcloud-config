@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="background">
     <div class="login-box">
       <h2>登录系统</h2>
       <form>
@@ -82,7 +82,8 @@ export default {
         this.open3()
       }
       else{
-        axios.post('http://localhost:8081/sys/indexss?email='+this.username+"&password="+this.password+"&identity="+this.identity,
+        console.log("进入登录")
+        axios.post( this.api.url+'/fore/indexss?email='+this.username+"&password="+this.password+"&identity="+this.identity,
           )
           // .catch(function (error) {
           //   console.log(error.response.data.msg)
@@ -90,12 +91,43 @@ export default {
           //   _this.open3()
           // })
           .then(function (response) {
-          console.log(response.data)
-            if (response.data.id==1){
-              // console.log("akjhba"+response.data.user)
 
-              _this.$router.push("/main")
+            if (response.data.id==1){
+               // console.log("akjhba"+response.data.user.phone+response.data.user.usename+_this.identity)
+              _this.$router.push({
+               path: '/main',
+                name:'maim',
+                params:{
+                 uname:response.data.user.phone,
+                  password:response.data.user.password,
+                  username:response.data.user.usename,
+                  identity:_this.identity
+                }
+
+
+              })
             }
+            else if(response.data.id==3){
+              _this.$router.push({
+                path: '/main',
+                name:'maim',
+                params:{
+                  uname:response.data.seller.sphone,
+                  password:response.data.seller.spasswoed,
+                  username:response.data.seller.sname,
+                  identity:_this.identity
+                }
+
+
+              })
+
+
+            } else {
+              console.log("出错了")
+              _this.msg = response.data.msg
+              _this.open3()
+            }
+
           })
 
           // if (response.data.code === 200) {
@@ -118,17 +150,33 @@ export default {
     },
   },
 
+
 }
 ;
 </script>
 
 <style>
-body {
-  background-image: url(https://img-blog.csdnimg.cn/6b9e11e1be154e558dd235507e158545.jpg);
-  background-repeat: no-repeat;
-  background-size: 100%;
-  background-position: 0px -50px;
+#background{
+  width: 100%;
+  height: 100%;
+  background: url(https://img-blog.csdnimg.cn/6b9e11e1be154e558dd235507e158545.jpg);
+  background-size:100% 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+
+
+  /*background-image: url(https://img-blog.csdnimg.cn/6b9e11e1be154e558dd235507e158545.jpg);*/
+  /*background-repeat: no-repeat;*/
+  /*background-size: 100%;*/
+  /*background-position: 0px -50px;*/
 }
+/*body {*/
+/*  background-image: url(https://img-blog.csdnimg.cn/6b9e11e1be154e558dd235507e158545.jpg);*/
+/*  background-repeat: no-repeat;*/
+/*  background-size: 100%;*/
+/*  background-position: 0px -50px;*/
+/*}*/
 
 .login-box {
   position: absolute;

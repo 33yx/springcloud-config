@@ -1,6 +1,7 @@
 <template>
   <div id="background">
       <h1>注册界面</h1>
+    <h6>请如实填写</h6>
 
 
         <div class="form">
@@ -53,6 +54,23 @@
       <label>营业执照：</label><input type="text" v-model.trim="sbus"><br/>
     </div>
 
+
+<!--    <div>-->
+<!--      <button @click="getCode" id="d" class="getphone" v-show="show">获取验证码</button>-->
+<!--      <button class="blue" v-show="!show" disabled="disabled">{-->
+<!--        {count}}秒后重新发送</button>-->
+<!--    </div>-->
+    <div>
+      <label>验证码：</label><input type="text" v-model.trim="Emsg">
+      <button v-if="!sendMsgDisabled" @click.prevent="huoqu">获取验证码</button>
+      <button v-if="sendMsgDisabled">{{ time+'秒后获取' }}</button>
+    </div>
+<!--    <div  class="form">-->
+
+<!--      <label>验证码：</label><input type="text" v-model.trim="Emsg">-->
+<!--      <button  class="getphone" @click.prevent="huoqu">获取验证码</button> <br/>-->
+<!--    </div>-->
+
     <div>
       <button @click.prevent="handlefinish">提交</button>
       <button @click.prevent="qiu">取消</button>
@@ -72,7 +90,10 @@ export default {
   data(){
 
     return{
+      time: 60, // 发送验证码倒计时
+      sendMsgDisabled: false,
       name:"",
+      Emsg:'',
       password:"",
       mail:"",
       tel:"",
@@ -87,86 +108,141 @@ export default {
       stuid:"",
       ssname:"",
       sbus:"",
+      msgd:"",
+      code:""
 
     };
   },methods:{
+    open3() {
+      this.$message({
+        showClose: true,
+        message: this.msgd,
+        type: 'success'
+      });
+    },
     postData() {
       console.log(this.user);
     },
 
     //点击完成按钮触发handlefinish
-    handlefinish:function()
-    {
-      if(localStorage['name']===this.name)
-      {
-        alert("用户名已存在");//如果用户名已存在则无法注册
-      }
-      else if(this.tel==='')
+    handlefinish:function() {
+      if(this.tel==='')
       {
         alert("账号不能为空");
       }
-      else if(this.password===''){
-        alert("密码不能为空");
-      }
-      else if(this.mail===''){
-        alert("邮箱不能为空");
-      }
-      else if(this.sex===''){
-        alert("选择性别");
-      }
-      else if(this.relname===''){
-        alert("填写真实姓名");
-      }
-      else if(this.age===''){
-        alert("年龄为空");
-      }
-    else if(this.caidid===''){
-      alert("身份证不能为空");
-    }
-    else if(this.identity===''){
-      alert("请确定身份");
-    }
-    else if(this.adress===''){
-      alert("地址不能为空");
-    }
-    else if(this.identity==1 && this.username===''){
-      alert("用户名为空");
-    }
-    else if(this.identity==1 && this.school===''){
-      alert("学校不能为空");
-    }
-    else if(this.identity==1 && this.stuid===''){
-      alert("学号为空");
-    }
-      else if(this.identity==2 && this.ssname===''){
-        alert("商铺名称为空");
-      }
+    //   else if(this.password===''){
+    //     alert("密码不能为空");
+    //   }
+    //   else if(this.mail===''){
+    //     alert("邮箱不能为空");
+    //   }
+    //   else if(this.sex===''){
+    //     alert("选择性别");
+    //   }
+    //   else if(this.relname===''){
+    //     alert("填写真实姓名");
+    //   }
+    //   else if(this.age===''){
+    //     alert("年龄为空");
+    //   }
+    // else if(this.caidid===''&& this.caidid.length==18){
+    //   alert("身份证填写有误");
+    // }
+    // else if(this.identity===''){
+    //   alert("请确定身份");
+    // }
+    // else if(this.adress===''){
+    //   alert("地址不能为空");
+    // }
+    // else if(this.identity==1 && this.username===''){
+    //   alert("用户名为空");
+    // }
+    // else if(this.identity==1 && this.school===''){
+    //   alert("学校不能为空");
+    // }
+    // else if(this.identity==1 && this.stuid===''){
+    //   alert("学号为空");
+    // }
+    //   else if(this.identity==2 && this.ssname===''){
+    //     alert("商铺名称为空");
+    //   }
       else{//将新用户信息存储到localStorage
-        this.axios({
-          url:'/sys/addusera',
-          method:'post',
-          params:{"usename":this.username,"useage":this.age,"schoollname":this.school,
-            "studentid":this.stuid,"cardid":this.caidid,"phone":this.tel,"password":this.password,"usex":this.sex}
-        }).then(res => {
-          console.log('数据接收');
-          console.log(res.data.data);
-        });
+          console.log(typeof this.age)
+         var catin=0;
+          let _this=this
+        if (this.identity==1){
+          if (this.code==this.Emsg){
+            axios.post(this.api.url+'/fore/addusera'+
+              '?usename='+this.username+"&useage="+this.age+"&schoollname="+this.school+"&address="+this.adress+"&uemail="+this.mail+"&uname="+this.relname
+              +"&studentid="+this.stuid+"&cardid="+this.caidid+"&phone="+this.tel+"&password="+this.password+"&usex="+this.sex+"&code="+this.Emsg,
+            ).then(function (response)  {
+              if(response.data.rid==1){
+                console.log('数据接收');
+                alert("注册成功，快去登陆吧");
+                _this.$router.replace('/Login');//完成注册后跳转至登录页面
+              }else {
+                alert(response.data.msg)
+              }
+            });
+          }else {
+            alert("请填写正确的验证码")
+          }
 
+        }
 
-        localStorage.setItem('name',this.name);
-        localStorage.setItem('password',this.password);
-        localStorage.setItem('mail',this.mail);
-        localStorage.setItem('tel',this.tel);
-        localStorage.setItem('s',"false");
-        alert("注册成功，快去登陆吧");
-        this.$router.replace('/Login');//完成注册后跳转至登录页面
+        if (this.identity==2){
+
+        }
+
       }
+    },
+
+    huoqu:function (){
+      let _this=this
+      //3224915249@qq.com
+      const that = this
+      that.sendMsgDisabled = true
+      const interval = window.setInterval(function() {
+        if ((that.time--) <= 0) {
+          that.time = 60
+          that.sendMsgDisabled = false
+          window.clearInterval(interval)
+        }
+      }, 1000)
+
+      axios.post(this.api.url+'/fore/sendMsg?email='+this.mail+"&uphone="+this.tel
+      ).then(function (response)  {
+        _this.code=response.data.code
+        console.log("验证码为"+_this.code)
+        _this.msgd = response.data.msg+"，请输入"
+        _this.open3()
+      });
+    },
+    // count(){
+    //   const that = this
+    //   that.sendMsgDisabled = true
+    //   const interval = window.setInterval(function() {
+    //     if ((that.time--) <= 0) {
+    //       that.time = 60
+    //       that.sendMsgDisabled = false
+    //       window.clearInterval(interval)
+    //     }
+    //   }, 1000)
+    // },
+
+
+    qiu:function (){
+      this.$router.replace('/Login');
     }
+
   }
 };
 </script>
 
 <style scoped>
+
+
+
 #background{
   width: 100%;
   height: 100%;
@@ -190,6 +266,34 @@ export default {
 #contain h1{
   color: white;
 }
+
+
+.getphone {
+  display: block;
+  height: 46px;
+  font-size: 22px;
+  color: #aaaaaa;
+  border: 1px solid #e6e6e6;
+  text-align: center;
+  border-radius: 23px;
+  background: white;
+  box-sizing: border-box;
+  padding:0 20px;
+  line-height: 46px;
+}
+.blue {
+  color: #508bef;
+  display: block;
+  height: 46px;
+  line-height: 46px;
+  font-size: 22px;
+  text-align: center;
+  border: 1px solid #e6e6e6;
+  border-radius: 23px;
+  box-sizing: border-box;
+  padding:0 20px;
+}
+
 /*.form{*/
 /*  color: white;*/
 /*  margin-left: 20%;*/

@@ -8,6 +8,10 @@ import menghong from "../components/menghong";
 import Login from "../views/Login";
 import Logon from "../views/logon";
 import infoshow from "../views/infoshow";
+import post from "../views/post";
+import rjoplist from "../views/rjoplist";
+import sellerjoplist from "../views/sellerjoplist";
+
 
 // import Main1 from "../views/Main1";
 //安装路由
@@ -48,7 +52,24 @@ export default new VueRouter({
     path:'/infoshow',
       name:'infoshow',
       component:infoshow
+    },{
+      path:'/',
+      name:'login',
+      component:Login
+    },{
+    path:'/post',
+      name:'post',
+      component:post
+    },{
+    path:'/rjoplist',
+      name:'rjoplist',
+      component:rjoplist
+    },{
+    path:'/sellerjoplist',
+      name:'sellerjoplist',
+      component:sellerjoplist
     }
+
     ]
 
 });
