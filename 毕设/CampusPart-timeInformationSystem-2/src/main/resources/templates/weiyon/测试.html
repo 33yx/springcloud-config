@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--<Iframe id="iframe-5566" name="iframe-5566" src="https://zhidao.baidu.com/question/308254569.html" width="1002" height="1002" scrolling="Auto" frameborder="0"></iframe>-->
+<!--<iframe id="iframe-5566" src="https://zhidao.baidu.com/question/308254569.html" name="iframe-5566" frameborder="0" width="100%" height="98%" style="display:none" οnlοad="iframLoad(this)">-->
+<!--</iframe>-->
+
+<!--    // (function (){-->
+<!--    //     var iframe = document.createElement('iframe');-->
+<!--    //     po.src="https://zhidao.baidu.com/question/308254569.html";-->
+<!--    //     document.body.appendChild(iframe);-->
+<!--    //     var doc = iframe.contentWindow.document;-->
+<!--    //     doc.open().write('<body onload="insertJS()">');-->
+<!--    //     doc.close();-->
+<!--    // })-->
+<!--<script type="text/javascript">-->
+<!--    $(window).load(function() {-->
+<!--        var f = document.createElement('iframe');-->
+<!--        f.src = "https://zhidao.baidu.com/question/308254569.html";-->
+<!--        f.width = 1000;-->
+<!--        f.height = 500;-->
+<!--        $('body').append(f);-->
+<!--    });-->
+<!--</script>-->
+
+<!--</body>-->
+<!--</html>-->
+
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <title>异步加载百度页面</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>异步加载百度页面</h1>-->
+<!--<iframe id="myFrame" src="about:blank"></iframe>-->
+<!--<script>-->
+<!--    var iframe = document.getElementById('myFrame');-->
+<!--    iframe.onload = function() {-->
+<!--        console.log('加载完成');-->
+<!--    };-->
+<!--    iframe.src = 'https://zhidao.baidu.com/question/308254569.html';-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <title>异步加载百度页面</title>-->
+<!--    <style>-->
+<!--        /* 使 iframe 元素充满整个页面 */-->
+<!--        html, body {-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--            height: 100%;-->
+<!--        }-->
+<!--        iframe {-->
+<!--            display: block;-->
+<!--            border: none;-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>异步加载自适应页面</h1>-->
+<!--<iframe id="myFrame" src="about:blank"></iframe>-->
+<!--<script>-->
+<!--    var iframe = document.getElementById('myFrame');-->
+<!--    iframe.onload = function() {-->
+<!--        console.log('加载完成');-->
+<!--        // 调整 iframe 大小以适应内容-->
+<!--        var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;-->
+<!--        iframe.style.height = iframeDoc.body.scrollHeight + 'px';-->
+<!--    };-->
+<!--    var infoType = '1';-->
+<!--    var unid = '0F44944281E9C9FEEA417C2602CE6F31';-->
+<!--    iframe.src = 'https://zwfw.fujian.gov.cn/cms-app/dept-serve/fn-detail?infoType=' + infoType + '&unid=' + unid;-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>异步加载页面示例</title>-->
+<!--    <style>-->
+<!--        html, body {-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--            height: 100%;-->
+<!--        }-->
+<!--        iframe {-->
+<!--            display: block;-->
+<!--            border: none;-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div id="iframe-container"></div>-->
+<!--<script>-->
+<!--    function loadIframe(url) {-->
+<!--        var iframe = document.createElement('iframe');-->
+<!--        iframe.setAttribute('id', 'my-iframe');-->
+<!--        iframe.setAttribute('src', url);-->
+<!--        iframe.style.display = 'block';-->
+<!--        iframe.style.width = '1px';-->
+<!--        iframe.style.minWidth = '100%';-->
+<!--        iframe.style.border = 'none';-->
+<!--        var container = document.getElementById('iframe-container');-->
+<!--        container.appendChild(iframe);-->
+<!--        var resizeObserver = new ResizeObserver(function() {-->
+<!--            var height = iframe.contentWindow.document.body.scrollHeight + 'px';-->
+<!--            iframe.style.height = height;-->
+<!--        });-->
+<!--        resizeObserver.observe(iframe);-->
+<!--    }-->
+<!--    var urlParams = new URLSearchParams(window.location.search);-->
+<!--    var infoType = '1';-->
+<!--    var unid = '0F44944281E9C9FEEA417C2602CE6F31';-->
+<!--    var url = 'https://zwfw.fujian.gov.cn/cms-app/dept-serve/fn-detail?infoType=' + infoType + '&unid=' + unid;-->
+<!--    loadIframe(url);-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>异步加载页面示例</title>-->
+<!--    <style>-->
+<!--        body, html {-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--            height: 100%;-->
+<!--            overflow: hidden;-->
+<!--        }-->
+<!--        #my-iframe {-->
+<!--            position: absolute;-->
+<!--            top: 0;-->
+<!--            left: 0;-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--            border: none;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div id="iframe-container"></div>-->
+<!--<script>-->
+<!--    function loadIframe(url) {-->
+<!--        var iframe = document.createElement('iframe');-->
+<!--        iframe.setAttribute('id', 'my-iframe');-->
+<!--        iframe.setAttribute('src', url);-->
+<!--        iframe.style.display = 'block';-->
+<!--        iframe.style.width = '100%';-->
+<!--        iframe.style.height = '100%';-->
+<!--        iframe.style.border = 'none';-->
+<!--        var container = document.getElementById('iframe-container');-->
+<!--        container.appendChild(iframe);-->
+<!--        var resizeObserver = new ResizeObserver(function() {-->
+<!--            var height = iframe.contentWindow.document.body.scrollHeight + 'px';-->
+<!--            iframe.style.height = height;-->
+<!--        });-->
+<!--        resizeObserver.observe(iframe);-->
+<!--        iframe.onload = function() {-->
+<!--            console.log("进入")-->
+<!--            var btn = iframe.contentWindow.document.querySelector('.mint-button.btn2.mint-button&#45;&#45;primary.mint-button&#45;&#45;normal');-->
+<!--            console.log("这个值为："+btn)-->
+<!--            btn.style.display = 'none';-->
+<!--        };-->
+
+<!--    }-->
+<!--    var urlParams = new URLSearchParams(window.location.search);-->
+<!--    // var infoType = urlParams.get('infoType');-->
+<!--    var infoType = '1';-->
+<!--    // var unid = urlParams.get('unid');-->
+<!--    var unid = '0F44944281E9C9FEEA417C2602CE6F31';-->
+<!--    var url = 'https://zwfw.fujian.gov.cn/cms-app/dept-serve/fn-detail?infoType=' + infoType + '&unid=' + unid;-->
+<!--    loadIframe(url);-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>异步加载页面</title>-->
+<!--    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>-->
+<!--    <style>-->
+<!--        body, html {-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--            overflow: hidden;-->
+<!--        }-->
+<!--        #frame {-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--            border: none;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<button onclick="loadPage('https://zwfw.fujian.gov.cn/cms-app/dept-serve/fn-detail?infoType=1&unid=0F44944281E9C9FEEA417C2602CE6F31')">点击加载页面</button>-->
+<!--<iframe id="frame"></iframe>-->
+<!--<script>-->
+<!--    function loadPage(url) {-->
+<!--        $.ajax({-->
+<!--            url:  url,-->
+<!--            type: 'GET',-->
+<!--            dataType: 'html',-->
+<!--            success: function(res) {-->
+<!--                var newDoc = document.open("text/html", "replace");-->
+<!--                newDoc.write(res);-->
+<!--                newDoc.close();-->
+<!--                var frame = document.getElementById('frame');-->
+<!--                var btn = frame.contentWindow.document.querySelector('.mint-button.btn2.mint-button&#45;&#45;primary.mint-button&#45;&#45;normal');-->
+<!--                if (btn) {-->
+<!--                    btn.style.display = 'none';-->
+<!--                }-->
+<!--            },-->
+<!--            error: function(xhr, textStatus, errorThrown) {-->
+<!--                console.log('请求失败');-->
+<!--            }-->
+<!--        });-->
+<!--    }-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <meta charset="utf-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+<!--    <title>异步加载页面</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>异步加载页面</h1>-->
+
+<!--&lt;!&ndash; 定义一个占位符，用于显示异步加载的页面 &ndash;&gt;-->
+<!--<div id="page"></div>-->
+
+<!--<script>-->
+<!--    // 定义一个函数，用于隐藏指定选择器的元素-->
+<!--    function hideElement(selector) {-->
+<!--        var element = document.querySelector(selector);-->
+<!--        if (element) {-->
+<!--            element.style.display = "none";-->
+<!--        }-->
+<!--    }-->
+
+<!--    // 定义一个函数，用于加载指定 URL 的页面-->
+<!--    function loadPage(url) {-->
+<!--        // 创建一个 iframe 元素-->
+<!--        var iframe = document.createElement("iframe");-->
+<!--        // 设置 iframe 的 src 属性为指定的 URL-->
+<!--        iframe.src = url;-->
+<!--        // 设置 iframe 的样式，使其铺满整个页面-->
+<!--        iframe.style.width = "100%";-->
+<!--        iframe.style.height = "100vh";-->
+<!--        iframe.style.border = "none";-->
+<!--        // 将 iframe 添加到占位符中-->
+<!--        document.getElementById("page").appendChild(iframe);-->
+
+<!--        // 等待 iframe 加载完成-->
+<!--        iframe.onload = function() {-->
+<!--            // 隐藏 iframe 中指定的按钮-->
+<!--            iframe.contentWindow.addEventListener("load", function() {-->
+<!--                hideElement("button[data-v-501a8ace].mint-button.mint-button&#45;&#45;primary.mint-button&#45;&#45;small");-->
+<!--            });-->
+<!--        };-->
+<!--    }-->
+
+<!--    // 从 URL 中获取参数值-->
+<!--    function getParameterByName(name, url) {-->
+<!--        if (!url) url = window.location.href;-->
+<!--        name = name.replace(/[\[\]]/g, "\\$&");-->
+<!--        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),-->
+<!--            results = regex.exec(url);-->
+<!--        if (!results) return null;-->
+<!--        if (!results[2]) return '';-->
+<!--        return decodeURIComponent(results[2].replace(/\+/g, " "));-->
+<!--    }-->
+
+<!--    // 获取参数值-->
+<!--    var infoType = '1';-->
+<!--    var unid = '0F44944281E9C9FEEA417C2602CE6F31';-->
+
+<!--    // 拼接 URL-->
+<!--    var url = "https://zwfw.fujian.gov.cn/cms-app/dept-serve/fn-detail?";-->
+<!--    if (infoType) {-->
+<!--        url += "infoType=" + infoType + "&";-->
+<!--    }-->
+<!--    if (unid) {-->
+<!--        url += "unid=" + unid;-->
+<!--    }-->
+
+<!--    // 加载页面-->
+<!--    loadPage(url);-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>页面加载示例</title>
+</head>
+<body>
+<div>
+    <iframe id="myframe" src="https://zwfw.fujian.gov.cn/cms-app/dept-serve/fn-detail?infoType=1&unid=0F44944281E9C9FEEA417C2602CE6F31" frameborder="0" style="width:100%;height:100%;"></iframe>
+</div>
+<script>
+    window.onload = function() {
+        var frame = document.getElementById("myframe");
+        frame.onload = function() {
+            var btn = frame.contentDocument.querySelector('button[data-v-501a8ace][class=mint-button]');
+            if (btn) {
+                btn.style.display = 'none';
+            }
+        };
+    };
+</script>
+</body>
+</html>

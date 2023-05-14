@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.xzf.springboot.dao.JopDao">
+
+
+    <select id="queryJopList" resultType="com.xzf.springboot.pojo.Jop">
+        select * from joptable
+    </select>
+
+    <select id="queryjopbyphone" resultType="com.xzf.springboot.pojo.Jop">
+        select * from joptable where sellerid=#{phone}
+    </select>
+
+
+
+
+
+    <select id="queryqJopList" resultType="com.xzf.springboot.pojo.Jop">
+        select * from joptable where examine = 1 and valid = 1
+    </select>
+
+    <select id="queryqJopEnddate" resultType="com.xzf.springboot.pojo.Jop">
+        select enddate from joptable where examine = 1 and valid = 1
+    </select>
+
+
+    <select id="queryjopListById" resultType="com.xzf.springboot.pojo.Jop">
+        select * from joptable where jopid=#{id}
+    </select>
+
+    <select id="searchJop" resultType="com.xzf.springboot.pojo.Jop">
+        select * from joptable
+        <where>
+            <if test="startTime != null and startTime != ''">
+                AND datetime <![CDATA[ >= ]]> #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                AND datetime <![CDATA[ <= ]]> #{endTime}
+            </if>
+            <if test="jopid != null">
+                AND jopid =#{jopid}
+            </if>
+            <if test="examine != null">
+                AND examine =#{examine}
+            </if>
+            <if test="valid != null ">
+                AND valid =#{valid}
+            </if>
+            <if test="sellerid != null">
+                AND sellerid =#{sellerid}
+            </if>
+
+
+        </where>
+    </select>
+
+    <select id="orderSearchList" resultType="com.xzf.springboot.pojo.Jop">
+        select * from joptable
+        <where>
+            <if test="input3 != null and input3 != ''">
+                AND address like '%${input3}%'
+            </if>
+<!--            <if test="input2 != null and input2 != ''">-->
+<!--                AND datetime <![CDATA[ <= ]]> #{input2}-->
+<!--            </if>-->
+            <if test="input1 != null">
+                AND jopid =#{input1}
+            </if>
+            <if test="examine != null">
+                AND examine =#{examine}
+            </if>
+            <if test="valid != null ">
+                AND valid = #{valid}
+            </if>
+<!--            <if test="sellerid != null">-->
+<!--                AND sellerid =#{sellerid}-->
+<!--            </if>-->
+        </where>
+    </select>
+
+    <update id="updateJopExamine" parameterType="Integer">
+        update joptable set examine=#{examine} where jopid=#{jopid}
+    </update>
+
+    <update id="updataNumber" parameterType="com.xzf.springboot.pojo.Jop">
+        update joptable set number =#{number} where jopid=#{jopid}
+    </update>
+
+
+    <update id="updateJopNot" parameterType="com.xzf.springboot.pojo.Jop">
+        update joptable set examine=#{examine},errorreason=#{errorreason} where jopid=#{jopid}
+    </update>
+
+    <update id="changleVaild" parameterType="com.xzf.springboot.pojo.Jop">
+        update joptable set valid=#{valid} where jopid=#{jopid}
+    </update>
+
+
+    <delete id="deleteJop" parameterType="int" >
+        delete from joptable where jopid=#{jopid}
+    </delete>
+
+    <insert id="addjop" parameterType="com.xzf.springboot.pojo.Jop">
+        insert into joptable (joptype,sellerid,pubdate,enddate,jobdescription,number,salary,address,valid,examine) values(#{joptype},#{sellerid},#{pubdate},#{enddate},#{jobdescription},#{number},#{salary},#{address},#{valid},#{examine})
+    </insert>
+
+
+
+
+
+</mapper>
