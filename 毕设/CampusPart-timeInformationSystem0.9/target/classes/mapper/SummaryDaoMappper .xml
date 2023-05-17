@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.xzf.springboot.dao.SummaryDao">
+
+    <select id="countUser" resultType="int">
+        SELECT COUNT(*) FROM usertable
+    </select>
+
+    <select id="countSeller" resultType="int">
+        SELECT COUNT(*) FROM sellertable
+    </select>
+
+    <select id="countJop" resultType="int">
+        SELECT COUNT(*) FROM joptable
+        <where>
+            <if test="examine != null">
+                AND examine =#{examine}
+            </if>
+            <if test="valid != null">
+                AND  valid =#{valid}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

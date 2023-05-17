@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>异步加载页面示例</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        #my-iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+<div id="iframe-container"></div>
+<script>
+    function loadIframe(url) {
+        var iframe = document.createElement('iframe');
+        iframe.setAttribute('id', 'my-iframe');
+        iframe.setAttribute('src', url);
+        iframe.style.display = 'block';
+        iframe.style.width = '100%';
+        iframe.style.height = '100%';
+        iframe.style.border = 'none';
+        var container = document.getElementById('iframe-container');
+        container.appendChild(iframe);
+        var resizeObserver = new ResizeObserver(function() {
+            var height = iframe.contentWindow.document.body.scrollHeight + 'px';
+            iframe.style.height = height;
+        });
+        resizeObserver.observe(iframe);
+        iframe.onload = function() {
+            console.log("进入")
+            var btn = iframe.contentWindow.document.querySelector('.mint-button.btn2.mint-button--primary.mint-button--normal');
+            console.log("这个值为："+btn)
+            btn.style.display = 'none';
+        };
+
+    }
+    var urlParams = new URLSearchParams(window.location.search);
+    // var infoType = urlParams.get('infoType');
+    var infoType = '1';
+    // var unid = urlParams.get('unid');
+    var unid = '0F44944281E9C9FEEA417C2602CE6F31';
+    // var url = 'https://zwfw.fujian.gov.cn/cms-app/dept-serve/fn-detail?infoType=' + infoType + '&unid=' + unid;
+    var url = 'https://news.cctv.com/';
+    loadIframe(url);
+</script>
+</body>
+</html>

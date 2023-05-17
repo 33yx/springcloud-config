@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.xzf.springboot.CampusPartTimeInformationSystemApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.613 s - in com.xzf.springboot.CampusPartTimeInformationSystemApplicationTests

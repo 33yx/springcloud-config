@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.xzf.springboot.dao.CardDao">
+
+    <delete id="deleteCard" parameterType="String" >
+        delete from cardtable where cphone=#{cphone}
+    </delete>
+
+    <select id="querycard" resultType="com.xzf.springboot.pojo.Card">
+        select carid from cardtable where cphone=#{cphone}
+    </select>
+
+    <insert id="addCard" parameterType="com.xzf.springboot.pojo.Card">
+        insert into cardtable (carid,cname,cphone,cage) values(#{carid},#{cname},#{cphone},#{cage})
+    </insert>
+
+    <select id="querycardone" resultType="com.xzf.springboot.pojo.Card">
+        select * from cardtable where cphone=#{cphone}
+    </select>
+
+
+    <update id="updateCard" parameterType="com.xzf.springboot.pojo.Card">
+        update cardtable set carid=#{carid},cname=#{cname},cage=#{cage} where cphone=#{cphone}
+    </update>
+
+
+
+</mapper>
